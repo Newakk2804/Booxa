@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/main.js" defer></script>
+  <title>Booxa - Главная</title>
+</head>
+
+<body>
+  <header>
+    <div class="nav">
+        <div class="nav__items">
+          <div class="nav__logo">
+            <a href="index.html"><img src="img/logo.png" alt=""></a>
+          </div>
+          <div class="nav__menu">
+            <ul class="menu__items">
+              <a href="contact.html">
+                <li class="item">
+                  Контакты
+                </li>
+              </a>
+              <a href="about.html">
+                <li class="item">
+                  О нас
+                </li>
+              </a>
+              <a href="delivery.html">
+                <li class="item">
+                  Доставка
+                </li>
+              </a>
+            </ul>
+          </div>
+          <div class="nav__button">
+            <ul class="menu__buttons">
+              <li class="buttons__item">
+                <a href="basket.html"><img src="img/card.svg" alt=""></a>
+              </li>
+              <li class="buttons__item">
+                <button onclick="togglePanel()">
+                  <img src="img/profile.svg" alt="">
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+  </header>
+  <div class="slide-panel-header" id="slide-panel">
+    <a href="login.html" class="slide-panel-link">
+      <p>Войти</p>
+    </a>
+    <a href="register.html" class="slide-panel-link">
+      <p>Регистрация</p>
+    </a>
+  </div>
+  <main>
+    <div class="container">
+      <section class="section-search" id="block-content">
+        <div class="block-search">
+          <input type="text" placeholder="Поиск">
+        </div>
+        <div class="block-catalog" id="block">
+          <p class="text underline">Каталог</p>
+          <div class="catalog__buttons">
+            <button type="button" class="button__catalog" id="button__catalog">жанры</button>
+            <button type="button" class="button__catalog">авторы</button>
+            <button type="button" class="button__catalog">издательства</button>
+            <button type="button" class="button__catalog">год издания</button>
+            <button type="button" class="button__catalog">язык книги</button>
+          </div>
+          <div class="block-catalog-hidden" id="block-hidden">
+            <p>Привет</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <section class="section-popular-books">
+      <div class="container">
+        <div class="pop-books-content">
+          <p class="text-pop-books underline">Популярные книги по просмотрам</p>
+          <div class="cards-popular-books">
+            <div class="card-pop-books">
+              <p class="text-pop-card-views">10 просмотров</p>
+              <img src="" alt="">
+              <p class="text-pop-card">название книги</p>
+              <a href="detail_book.html" class="button-more-details">
+                подробнее
+              </a>
+            </div>
+            <div class="card-pop-books">
+              <p class="text-pop-card-views">10 просмотров</p>
+              <img src="" alt="">
+              <p class="text-pop-card">название книги</p>
+              <a href="detail_book.html" class="button-more-details">
+                подробнее
+              </a>
+            </div>
+            <div class="card-pop-books">
+              <p class="text-pop-card-views">10 просмотров</p>
+              <img src="" alt="">
+              <p class="text-pop-card">название книги</p>
+              <a href="detail_book.html" class="button-more-details">
+                подробнее
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+      <section class="section-list-card">
+        <div class="list-card">
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="detail_book.html" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="#" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="#" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="#" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="#" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="#" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="#" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="#" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="#" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-img">
+              <img src="" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">название книги</p>
+                </div>
+                <p class="text-card-description">
+                  аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
+                </p>
+                <p class="text-card">автор: Пушкин</p>
+                <p class="text-card">издательство: название издательства</p>
+                <p class="text-card">год издания: 1999</p>
+                <p class="text-card">язык книги: Русский</p>
+                <p class="text-card">цена: 100 BYN</p>
+              </div>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="#" class="button-card">
+                  подробнее
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+    <div class="container">
+      <section class="section-pagination">
+        <div class="pagination">
+          <a href="#"><img src="img/arrow-left.svg" alt=""></a>
+          <div class="pagination-page">
+            <a href="#">
+              <p class="text-pagination active">1</p>
+            </a>
+            <a href="#">
+              <p class="text-pagination">2</p>
+            </a>
+            <a href="#">
+              <p class="text-pagination">3</p>
+            </a>
+            <a href="#">
+              <p class="text-pagination">4</p>
+            </a>
+            <a href="#">
+              <p class="text-pagination">5</p>
+            </a>
+          </div>
+          <a href="#"><img src="img/arrow-right.svg" alt=""></a>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer>
+      <div class="footer-element">
+        <div class="footer-content">
+          <div class="footer-nav">
+            <ul class="footer-nav-list">
+              <a href="contact.html">
+                <li class="footer-nav-item">Контакты</li>
+              </a>
+              <a href="about.html">
+                <li class="footer-nav-item">О нас</li>
+              </a>
+              <a href="delivery.html">
+                <li class="footer-nav-item">Доставка</li>
+              </a>
+            </ul>
+          </div>
+          <div class="footer-social">
+            <a href="#"><img src="img/instagram.svg" alt=""></a>
+            <a href="#"><img src="img/telegram.svg" alt=""></a>
+          </div>
+        </div>
+        <div class="footer-booxa">
+          <p>© 2025 Booxa</p>
+        </div>
+      </div>
+  </footer>
+</body>
+
+</html>

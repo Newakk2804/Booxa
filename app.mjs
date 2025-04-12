@@ -3,10 +3,13 @@ import expressLayout from 'express-ejs-layouts';
 import methodOverride from 'method-override';
 import dotenv from 'dotenv';
 import booksRouter from './server/routes/books.mjs';
+import connectDB from './server/config/db.mjs';
 
 dotenv.config();
 
 const app = express();
+
+connectDB();
 
 app.use(express.static('public'));
 

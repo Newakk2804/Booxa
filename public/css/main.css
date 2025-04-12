@@ -192,6 +192,14 @@ main {
   height: 650px;
 }
 
+.block-catalog-hidden {
+  display: none;
+}
+
+.block-catalog-hidden.visible {
+  display: block;
+}
+
 .block-search {
   width: 1080px;
   height: 40px;
@@ -266,6 +274,57 @@ main {
 .button__catalog.clicked {
   background-color: #4e5d63; /* фон при наведении */
   color: #ffffff;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.radio-wrapper {
+  position: relative;
+  padding-left: 32px;
+  cursor: pointer;
+  user-select: none;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+.radio-wrapper input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio-mark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border: 2px solid #7fa5a3;
+  border-radius: 10px; /* Закругление углов */
+  transition: 0.2s;
+}
+
+.radio-wrapper input[type='radio']:checked ~ .radio-mark {
+  background-color: #7fa5a3;
+}
+
+.radio-wrapper input[type='radio']:checked ~ .radio-mark::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 4px; /* закругление внутреннего квадратика */
+}
+
+.radio-wrapper:hover .radio-mark {
+  border-color: #5e8885;
 }
 
 .section-popular-books {

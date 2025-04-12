@@ -7,14 +7,66 @@
       <div class="block-catalog" id="block">
         <p class="text underline">Каталог</p>
         <div class="catalog__buttons">
-          <button type="button" class="button__catalog" id="button__catalog">жанры</button>
-          <button type="button" class="button__catalog">авторы</button>
-          <button type="button" class="button__catalog">издательства</button>
-          <button type="button" class="button__catalog">год издания</button>
-          <button type="button" class="button__catalog">язык книги</button>
+          <button type="button" class="button__catalog" id="button_genre">жанры</button>
+          <button type="button" class="button__catalog" id="button_author">авторы</button>
+          <button type="button" class="button__catalog" id="button_publishing">издательства</button>
+          <button type="button" class="button__catalog" id="button_yearOfPublication">год издания</button>
+          <button type="button" class="button__catalog" id="button_language">язык книги</button>
         </div>
-        <div class="block-catalog-hidden" id="block-hidden">
-          <p>Привет</p>
+        <div class="block-catalog-hidden" id="block-hidden-genre">
+          <div class="radio-group">
+            <% allGenres.forEach(genre=> { %>
+              <label class="radio-wrapper">
+                <input type="radio" name="genre" value="<%= genre %>" onclick="toggleRadio(this)">
+                <span class="radio-mark"></span>
+                <%= genre %>
+              </label>
+              <% }) %>
+          </div>
+        </div>
+        <div class="block-catalog-hidden" id="block-hidden-author">
+          <div class="radio-group">
+            <% allAuthors.forEach(author=> { %>
+              <label class="radio-wrapper">
+                <input type="radio" name="author" value="<%= author %>" onclick="toggleRadio(this)">
+                <span class="radio-mark"></span>
+                <%= author %>
+              </label>
+              <% }) %>
+          </div>
+        </div>
+        <div class="block-catalog-hidden" id="block-hidden-publishing">
+          <div class="radio-group">
+            <% allPublishingHouse.forEach(publishingHouse=> { %>
+              <label class="radio-wrapper">
+                <input type="radio" name="publishingHouse" value="<%= publishingHouse %>" onclick="toggleRadio(this)">
+                <span class="radio-mark"></span>
+                <%= publishingHouse %>
+              </label>
+              <% }) %>
+          </div>
+        </div>
+        <div class="block-catalog-hidden" id="block-hidden-yearOfPublication">
+          <div class="radio-group">
+            <% allYearOfPublication.forEach(year=> { %>
+              <label class="radio-wrapper">
+                <input type="radio" name="year" value="<%= year %>" onclick="toggleRadio(this)">
+                <span class="radio-mark"></span>
+                <%= year %>
+              </label>
+              <% }) %>
+          </div>
+        </div>
+        <div class="block-catalog-hidden" id="block-hidden-language">
+          <div class="radio-group">
+            <% allLanguages.forEach(language=> { %>
+              <label class="radio-wrapper">
+                <input type="radio" name="language" value="<%= language %>" onclick="toggleRadio(this)">
+                <span class="radio-mark"></span>
+                <%= language %>
+              </label>
+              <% }) %>
+          </div>
         </div>
       </div>
     </section>
@@ -24,65 +76,67 @@
       <div class="pop-books-content">
         <p class="text-pop-books underline">Популярные книги по просмотрам</p>
         <div class="cards-popular-books">
-          <div class="card-pop-books">
-            <p class="text-pop-card-views">10 просмотров</p>
-            <img src="" alt="">
-            <p class="text-pop-card">название книги</p>
-            <a href="detail_book.html" class="button-more-details">
-              подробнее
-            </a>
-          </div>
-          <div class="card-pop-books">
-            <p class="text-pop-card-views">10 просмотров</p>
-            <img src="" alt="">
-            <p class="text-pop-card">название книги</p>
-            <a href="detail_book.html" class="button-more-details">
-              подробнее
-            </a>
-          </div>
-          <div class="card-pop-books">
-            <p class="text-pop-card-views">10 просмотров</p>
-            <img src="" alt="">
-            <p class="text-pop-card">название книги</p>
-            <a href="detail_book.html" class="button-more-details">
-              подробнее
-            </a>
-          </div>
+          <% popularBooks.forEach(book=> { %>
+            <div class="card-pop-books">
+              <p class="text-pop-card-views">
+                <%= book.numberOfViews %> просмотров
+              </p>
+              <img src="<%= book.imageUrl %>" alt="">
+              <p class="text-pop-card">
+                <%= book.title %>
+              </p>
+              <a href="detail_book.html" class="button-more-details">
+                подробнее
+              </a>
+            </div>
+            <% }) %>
         </div>
       </div>
     </div>
   </section>
   <div class="container">
     <section class="section-list-card">
-      <div class="list-card">
-        <div class="card">
-          <div class="card-img">
-            <img src="" alt="">
-          </div>
-          <div class="card-content">
-            <div class="card-content-text">
-              <div class="block-text-title">
-                <p class="text-card-title">название книги</p>
+      <div class="list-card" id="list-card">
+        <% allBooks.forEach(book=> { %>
+          <div class="card">
+            <div class="card-img">
+              <img src="<%= book.imageUrl %>" alt="">
+            </div>
+            <div class="card-content">
+              <div class="card-content-text">
+                <div class="block-text-title">
+                  <p class="text-card-title">
+                    <%= book.title %>
+                  </p>
+                </div>
+                <p class="text-card-description">
+                  <%= book.description %>
+                </p>
+                <p class="text-card">автор: <%= book.author %>
+                </p>
+                <p class="text-card">жанр: <%= book.genres %>
+                </p>
+                <p class="text-card">издательство: <%= book.publishingHouse %>
+                </p>
+                <p class="text-card">год издания: <%= book.yearOfPublication %>
+                </p>
+                <p class="text-card">язык книги: <%= book.language %>
+                </p>
+                <p class="text-card">количество страниц: <%= book.numberOfBooks %>
+                </p>
+                <p class="text-card">цена: <%= book.price %> BYN</p>
               </div>
-              <p class="text-card-description">
-                аывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкраывпыврыкрыкр
-              </p>
-              <p class="text-card">автор: Пушкин</p>
-              <p class="text-card">издательство: название издательства</p>
-              <p class="text-card">год издания: 1999</p>
-              <p class="text-card">язык книги: Русский</p>
-              <p class="text-card">цена: 100 BYN</p>
-            </div>
-            <div class="card-content-button">
-              <a href="#" class="button-card">
-                в корзину
-              </a>
-              <a href="detail_book.html" class="button-card">
-                подробнее
-              </a>
+              <div class="card-content-button">
+                <a href="#" class="button-card">
+                  в корзину
+                </a>
+                <a href="detail_book.html" class="button-card">
+                  подробнее
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+          <% }) %>
       </div>
     </section>
   </div>

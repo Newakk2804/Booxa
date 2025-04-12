@@ -14,10 +14,10 @@ const BookSchema = mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required: true,
     },
-    genre: {
+    genres: [{
       type: mongoose.Schema.Types.String,
       required: true,
-    },
+    }],
     author: {
       type: mongoose.Schema.Types.String,
       required: true,
@@ -52,7 +52,7 @@ const BookSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.Model('Book', BookSchema);
+export default mongoose.model('Book', BookSchema);
 
 // таблица "книга" //
 // название

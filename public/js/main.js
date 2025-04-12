@@ -3,28 +3,48 @@ function togglePanel() {
   panel.classList.toggle('active');
 }
 
-const btns = document.querySelectorAll('.button__catalog');
 const content = document.getElementById('block');
 const block_content = document.getElementById('block-content');
-const block_hidden = document.getElementById('block-hidden');
 
-btns.forEach((el) => {
-  el.addEventListener('click', (e) => {
-    const isActive = e.target.classList.contains('clicked');
+const allButtons = document.querySelectorAll('.button__catalog');
+const allBlocks = {
+  genre: document.getElementById('block-hidden-genre'),
+  author: document.getElementById('block-hidden-author'),
+  publishing: document.getElementById('block-hidden-publishing'),
+  yearOfPublication: document.getElementById('block-hidden-yearOfPublication'),
+  language: document.getElementById('block-hidden-language'),
+};
 
-    // Сбрасываем классы у всех кнопок и блоков
-    btns.forEach((btn) => btn.classList.remove('clicked'));
-    content.classList.remove('open');
+allButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const target = btn.id.replace('button_', '');
+    const isActive = btn.classList.contains('clicked');
+
+    allButtons.forEach((b) => b.classList.remove('clicked'));
     block_content.classList.remove('open-block');
-    block_hidden.classList.remove('visible');
+    content.classList.remove('open');
+    Object.values(allBlocks).forEach((block) => {
+      if (block) block.classList.remove('visible');
+    });
 
-    // Если кнопка НЕ была активной — активируем её
     if (!isActive) {
-      e.target.classList.add('clicked');
-      content.classList.add('open');
+      btn.classList.add('clicked');
       block_content.classList.add('open-block');
-      block_hidden.classList.add('visible');
+      content.classList.add('open');
+      if (allBlocks[target]) {
+        allBlocks[target].classList.add('visible');
+      }
     }
-    // Если была активной — ничего не делаем (всё уже сброшено)
   });
 });
+
+let lastChecked = null;
+
+function toggleRadio(radio) {
+  if (lastChecked === radio) {
+    radio.checked = false;
+    lastChecked = null;
+  } else {
+    lastChecked = radio;
+  }
+}

@@ -110,21 +110,23 @@
                   </p>
                 </div>
                 <p class="text-card-description">
-                  <%= book.description %>
+                  <%= book.description.length> 205 ? book.description.slice(0, 205) + '...' : book.description %>
                 </p>
-                <p class="text-card">автор: <%= book.author %>
-                </p>
-                <p class="text-card">жанр: <%= book.genres %>
-                </p>
-                <p class="text-card">издательство: <%= book.publishingHouse %>
-                </p>
-                <p class="text-card">год издания: <%= book.yearOfPublication %>
-                </p>
-                <p class="text-card">язык книги: <%= book.language %>
-                </p>
-                <p class="text-card">количество страниц: <%= book.numberOfBooks %>
-                </p>
-                <p class="text-card">цена: <%= book.price %> BYN</p>
+                <div class="block-text-card">
+                  <p class="text-card">автор: <%= book.author %>
+                  </p>
+                  <p class="text-card">жанр: <%= book.genres %>
+                  </p>
+                  <p class="text-card">издательство: <%= book.publishingHouse %>
+                  </p>
+                  <p class="text-card">год издания: <%= book.yearOfPublication %>
+                  </p>
+                  <p class="text-card">язык книги: <%= book.language %>
+                  </p>
+                  <p class="text-card">количество страниц: <%= book.numberOfBooks %>
+                  </p>
+                  <p class="text-card"><span>цена: <%= book.price %> BYN</span></p>
+                </div>
               </div>
               <div class="card-content-button">
                 <a href="#" class="button-card">

@@ -218,6 +218,13 @@ main {
   padding-left: 20px;
 }
 
+.block-search input:focus {
+  border-color: #5e8885;
+  outline: none;
+  box-shadow: 0 0 5px rgba(94, 136, 133, 0.5);
+  transition: all 0.1s;
+}
+
 .block-catalog {
   width: 1080px;
   height: 107px;

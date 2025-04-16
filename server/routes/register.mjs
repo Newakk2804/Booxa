@@ -6,7 +6,7 @@ router.get('/register', (req, res) => {
   const locals = {
     title: 'Регистрация',
   };
-  res.render('register.ejs', locals);
+  res.render('register', locals);
 });
 
 export default router;

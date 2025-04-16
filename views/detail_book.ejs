@@ -1,0 +1,130 @@
+<main>
+  <div class="container">
+    <section class="section-detail-book">
+      <div class="card-book">
+        <div class="block-first">
+          <div class="card-img">
+            <img src="<%= book.imageUrl %>" alt="">
+          </div>
+          <div class="card-content-detail">
+            <p class="text-card-title">
+              <%= book.title %>
+            </p>
+            <p class="text-card-desc">
+              <%= book.description %>
+            </p>
+          </div>
+        </div>
+        <div class="block-second">
+          <div class="description">
+            <div class="block-text-card">
+              <p class="description-item">автор: <%= book.author %>
+              </p>
+              <p class="description-item">жанр: <%= book.genres %>
+              </p>
+              <p class="description-item">издательство: <%= book.publishingHouse %>
+              </p>
+              <p class="description-item">год издания: <%= book.yearOfPublication %>
+              </p>
+              <p class="description-item">язык книги: <%= book.language %>
+              </p>
+              <p class="description-item">количество страниц: <%= book.numberOfBooks %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="block-third">
+          <p class="text-views">просмотры: <%= book.numberOfViews %>
+          </p>
+          <div class="block-button-price">
+            <p class="text-price">
+              <%= book.price %> BYN
+            </p>
+            <a href="#" class="button-card">
+              <p>в корзину</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <% if (bookGenres.length !==0) { %>
+
+    <section class="section-popular-books">
+      <div class="container">
+        <div class="pop-books-content">
+          <p class="text-pop-books underline">Похожие книги по жанру</p>
+          <div class="cards-popular-books">
+            <% bookGenres.forEach(book=> { %>
+              <div class="card-pop-books">
+                <p class="text-pop-card-views">
+                  <%= book.numberOfViews %> просмотров
+                </p>
+                <img src="<%= book.imageUrl %>" alt="">
+                <p class="text-pop-card">
+                  <%= book.title %>
+                </p>
+                <a href="detail_book/<%= book._id %>" class="button-more-details">
+                  <p>подробнее</p>
+                </a>
+              </div>
+              <% }) %>
+          </div>
+        </div>
+      </div>
+    </section>
+    <% } else { %>
+      <% } %>
+        <% if (bookPublishingHouse.length !==0) { %>
+          <section class="section-popular-books">
+            <div class="container">
+              <div class="pop-books-content">
+                <p class="text-pop-books underline">Книги издательства "<%= book.publishingHouse %>"</p>
+                <div class="cards-popular-books">
+                  <% bookPublishingHouse.forEach(book=> { %>
+                    <div class="card-pop-books">
+                      <p class="text-pop-card-views">
+                        <%= book.numberOfViews %> просмотров
+                      </p>
+                      <img src="<%= book.imageUrl %>" alt="">
+                      <p class="text-pop-card">
+                        <%= book.title %>
+                      </p>
+                      <a href="detail_book/<%= book._id %>" class="button-more-details">
+                        <p>подробнее</p>
+                      </a>
+                    </div>
+                    <% }) %>
+                </div>
+              </div>
+            </div>
+          </section>
+          <% } else { %>
+            <% } %>
+              <% if (bookAuthor.length !==0) { %>
+                <section class="section-popular-books">
+                  <div class="container">
+                    <div class="pop-books-content">
+                      <p class="text-pop-books underline">Книги автора "<%= book.author %>"</p>
+                      <% bookAuthor.forEach(book=> { %>
+                        <div class="card-pop-books">
+                          <p class="text-pop-card-views">
+                            <%= book.numberOfViews %> просмотров
+                          </p>
+                          <img src="<%= book.imageUrl %>" alt="">
+                          <p class="text-pop-card">
+                            <%= book.title %>
+                          </p>
+                          <a href="detail_book/<%= book._id %>" class="button-more-details">
+                            <p>подробнее</p>
+                          </a>
+                        </div>
+                        <% }) %>
+
+                    </div>
+                  </div>
+                  </div>
+                </section>
+                <% } else { %>
+                  <% } %>
+</main>

@@ -6,7 +6,7 @@ router.get('/login', (req, res) => {
   const locals = {
     title: 'Вход',
   };
-  res.render('login.ejs', locals);
+  res.render('login', locals);
 });
 
 export default router;

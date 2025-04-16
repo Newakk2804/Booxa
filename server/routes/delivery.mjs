@@ -6,7 +6,7 @@ router.get('/delivery', (req, res) => {
   const locals = {
     title: 'Доставка',
   };
-  res.render('delivery.ejs', locals);
+  res.render('delivery', locals);
 });
 
 export default router;

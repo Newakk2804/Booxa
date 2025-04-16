@@ -6,7 +6,7 @@ router.get('/basket', (req, res) => {
   const locals = {
     title: 'Корзина',
   };
-  res.render('basket.ejs', locals);
+  res.render('basket', locals);
 });
 
 export default router;

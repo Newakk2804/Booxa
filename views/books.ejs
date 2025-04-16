@@ -1,3 +1,5 @@
+<script type="text/javascript" defer src="/js/search_params.js"></script>
+<script type="text/javascript" defer src="/js/search_input.js"></script>
 <main>
   <div class="container">
     <section class="section-search" id="block-content">
@@ -85,7 +87,7 @@
               <p class="text-pop-card">
                 <%= book.title %>
               </p>
-              <a href="detail_book.html" class="button-more-details">
+              <a href="/detail-book/<%= book._id %>" class="button-more-details">
                 подробнее
               </a>
             </div>
@@ -132,7 +134,7 @@
                 <a href="#" class="button-card">
                   в корзину
                 </a>
-                <a href="detail_book.html" class="button-card">
+                <a href="/detail-book/<%= book._id %>" class="button-card">
                   подробнее
                 </a>
               </div>

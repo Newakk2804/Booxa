@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import mongoose from 'mongoose';
 import Book from '../models/Books.mjs';
 
 const router = Router();
@@ -29,6 +30,39 @@ router.get('/', async (req, res) => {
     allLanguages,
     popularBooks,
   });
+});
+
+router.get('/detail-book/:id', async (req, res) => {
+  const idBook = req.params.id;
+  const findBook = await Book.findById(idBook);
+  const bookGenres = await Book.find({
+    genres: { $in: findBook.genres },
+    _id: { $ne: findBook._id },
+  })
+    .sort({ numberOfViews: -1 })
+    .limit(3);
+  const bookPublishingHouse = await Book.find({
+    publishingHouse: { $in: findBook.publishingHouse },
+    _id: { $ne: findBook._id },
+  })
+    .sort({ numberOfViews: -1 })
+    .limit(3);
+  const bookAuthor = await Book.find({
+    author: { $in: findBook.author },
+    _id: { $ne: findBook._id },
+  })
+    .sort({ numberOfViews: -1 })
+    .limit(3);
+
+  const locals = {
+    title: findBook.title,
+    book: findBook,
+    bookGenres,
+    bookPublishingHouse,
+    bookAuthor,
+  };
+
+  res.render('detail_book', locals);
 });
 
 router.get('/search-by-params', async (req, res) => {

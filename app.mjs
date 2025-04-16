@@ -8,6 +8,7 @@ import aboutRouter from './server/routes/about.mjs';
 import deliveryRouter from './server/routes/delivery.mjs';
 import loginRouter from './server/routes/login.mjs';
 import registerRouter from './server/routes/register.mjs';
+import basketRouter from './server/routes/basket.mjs';
 import connectDB from './server/config/db.mjs';
 import multer from 'multer';
 
@@ -31,6 +32,7 @@ app.use(aboutRouter);
 app.use(deliveryRouter);
 app.use(loginRouter);
 app.use(registerRouter);
+app.use(basketRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on port ${process.env.PORT}`);

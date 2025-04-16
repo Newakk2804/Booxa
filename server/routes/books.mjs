@@ -41,7 +41,7 @@ router.get('/search-by-params', async (req, res) => {
     if (author) query.author = author;
     if (publishingHouse) query.publishingHouse = publishingHouse;
     if (yearOfPublication) {
-      query.yearOfPublication = Number(yearOfPublication); // 🔧 преобразуем в число
+      query.yearOfPublication = Number(yearOfPublication);
     }
     if (language) query.language = language;
 
@@ -49,6 +49,24 @@ router.get('/search-by-params', async (req, res) => {
     res.json(books);
   } catch (err) {
     console.error(err);
+    res.status(500).json({ message: 'Ошибка при поиске книг' });
+  }
+});
+
+router.get('/search-by-search-field', async (req, res) => {
+  try {
+    const { value } = req.query;
+    console.log(value);
+
+    const books = await Book.find({
+      $or: [
+        { title: { $regex: value, $options: 'i' } },
+        { description: { $regex: value, $options: 'i' } },
+      ],
+    });
+    res.json(books);
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Ошибка при поиске книг' });
   }
 });

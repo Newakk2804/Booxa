@@ -4,11 +4,14 @@
       <div class="block-register">
         <p class="text-register-title">Регистрация</p>
         <div class="block-input">
-          <input type="text" placeholder="почта" class="input-register">
-          <input type="password" placeholder="пароль" class="input-register">
-          <input type="password" placeholder="повторить пароль" class="input-register">
+          <form action="/register" method="POST" class="block-input">
+            <input type="text" placeholder="почта" class="input-register" name="mail">
+            <input type="password" placeholder="пароль" class="input-register" name="password">
+            <input type="password" placeholder="повторить пароль" class="input-register" name="secondPassword">
+            <input type="submit" class="button-register" value="Зарегистрироваться">
+          </form>
         </div>
-        <button class="button-register">Зарегистрироваться</button>
+        <!-- <button class="button-register">Зарегистрироваться</button> -->
         <p class="text-register">Есть аккаунт? <span><a href="login">Войдите</a></span></p>
       </div>
     </div>

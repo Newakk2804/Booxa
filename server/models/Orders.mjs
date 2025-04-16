@@ -23,7 +23,7 @@ const OrderSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.Model('Order', OrderSchema);
+export default mongoose.model('Order', OrderSchema);
 
 // таблица "заказы" //
 // дата

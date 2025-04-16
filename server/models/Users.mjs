@@ -30,16 +30,23 @@ const UserSchema = mongoose.Schema(
     orders: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Order',
+      required: false,
     },
     basket: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Basket',
+      required: false,
+    },
+    role: {
+      type: mongoose.Schema.Types.String,
+      enum: ['user', 'admin'],
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.Model('User', UserSchema);
+export default mongoose.model('User', UserSchema);
 
 // таблица "пользователи" //
 // имя

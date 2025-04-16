@@ -16,7 +16,7 @@ const BasketSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.Model('Basket', BasketSchema);
+export default mongoose.model('Basket', BasketSchema);
 
 // таблица "корзина" //
 // список товаров

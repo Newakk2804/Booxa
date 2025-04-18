@@ -33,7 +33,11 @@ router.get('/', async (req, res) => {
 
 router.get('/detail-book/:id', async (req, res) => {
   const idBook = req.params.id;
-  const findBook = await Book.findById(idBook);
+  const findBook = await Book.findByIdAndUpdate(
+    idBook,
+    { $inc: { numberOfViews: 1 } },
+    { new: true }
+  );
   const bookGenres = await Book.find({
     genres: { $in: findBook.genres },
     _id: { $ne: findBook._id },

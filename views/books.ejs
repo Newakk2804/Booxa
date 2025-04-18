@@ -80,12 +80,9 @@
         <div class="cards-popular-books">
           <% popularBooks.forEach(book=> { %>
             <div class="card-pop-books">
-              <p class="text-pop-card-views">
-                <%= book.numberOfViews %> просмотров
-              </p>
               <img src="<%= book.imageUrl %>" alt="">
               <p class="text-pop-card">
-                <%= book.title %>
+                <%= book.title.length > 25 ? book.title.slice(0, 25) + '...' : book.title %>
               </p>
               <a href="/detail-book/<%= book._id %>" class="button-more-details">
                 подробнее

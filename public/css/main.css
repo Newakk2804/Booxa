@@ -1196,10 +1196,10 @@ footer {
 
 .profile-content {
   width: 100%;
-  height: 250px;
+  height: 300px;
   display: flex;
   gap: 50px;
-  align-items: center;
+  /* align-items: center; */
   margin-bottom: 50px;
 }
 
@@ -1207,7 +1207,69 @@ footer {
   width: 200px;
   height: 200px;
   border-radius: 100px;
-  background-color: #616161;
+}
+
+.profile-img img {
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+}
+
+.file-upload {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.file-upload input[type='file'] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: none;
+}
+
+.file-upload-label {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #7fa5a3;
+  color: #fff;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.file-upload-label:hover {
+  background-color: #4e5d63;
+}
+
+.button-upload {
+  display: inline-block;
+  padding: 6px 35px;
+  background-color: #7fa5a3;
+  color: #fff;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s; 
+}
+
+.button-upload:hover {
+  background-color: #4e5d63;
+}
+
+.form-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .profile-description {
@@ -1216,7 +1278,7 @@ footer {
   gap: 30px;
 }
 
-.block-text-input{
+.block-text-input {
   display: flex;
   align-items: center;
   gap: 5px;

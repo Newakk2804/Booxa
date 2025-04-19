@@ -8,11 +8,18 @@
       <div class="block-profile">
         <div class="profile-content">
           <div class="profile-img">
-            <img src="" alt="">
+            <img src="<%= user.imageUrl %>" alt="">
+            <form action="/profile/photo" method="POST" class="form-upload" enctype="multipart/form-data">
+              <div class="file-upload">
+                <label class="file-upload-label" for="imageUrl">выбрать фото</label>
+                <input type="file" name="imageUrl" id="imageUrl" accept="image/*" required />
+              </div>
+              <button type="submit" class="button-upload" >загрузить</button>
+            </form>
           </div>
           <div class="profile-description">
             <div class="block-text-input">
-              <p class="text-profile">Фамилия: </p> 
+              <p class="text-profile">Фамилия: </p>
               <input id="input-surname" type="text" value="<%= user.surname %>">
             </div>
             <div class="block-text-input">
@@ -22,7 +29,7 @@
             <div class="block-text-input">
               <p class="text-profile">Почта: </p>
               <input id="input-mail" type="text" value="<%= user.mail %>" readonly>
-            </div>            
+            </div>
             <div class="block-text-input">
               <p class="text-profile">Адрес проживания: </p>
               <input id="input-address" type="text" value="<%= user.address %>">

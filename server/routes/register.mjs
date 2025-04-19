@@ -21,7 +21,7 @@ router.post('/register', async (req, res) => {
   if (password !== secondPassword) throw new Error('passwords do not match');
 
   const hashedPassword = hashPassword(password);
-  const newUser = new User({ mail, password: hashedPassword, role: 'user' });
+  const newUser = new User({ mail, password: hashedPassword, role: 'user', imageUrl: 'img/user.jpg'});
   try {
     const savedUser = await newUser.save();
     return res.redirect('login');

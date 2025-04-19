@@ -82,7 +82,7 @@
             <div class="card-pop-books">
               <img src="<%= book.imageUrl %>" alt="">
               <p class="text-pop-card">
-                <%= book.title.length > 25 ? book.title.slice(0, 25) + '...' : book.title %>
+                <%= book.title.length> 25 ? book.title.slice(0, 25) + '...' : book.title %>
               </p>
               <a href="/detail-book/<%= book._id %>" class="button-more-details">
                 подробнее
@@ -128,7 +128,7 @@
                 </div>
               </div>
               <div class="card-content-button">
-                <a href="#" class="button-card">
+                <a href="/basket/<%= book._id %>" class="button-card">
                   в корзину
                 </a>
                 <a href="/detail-book/<%= book._id %>" class="button-card">

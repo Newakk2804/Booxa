@@ -1175,6 +1175,12 @@ footer {
   color: #1a1a1a;
 }
 
+.empty-basket {
+  text-align: center;
+  font-weight: 700;
+  font-size: 24px;
+}
+
 .profile-title {
   margin-left: 50px;
   margin-top: 50px;
@@ -1257,7 +1263,7 @@ footer {
   cursor: pointer;
   font-size: 18px;
   font-weight: 700;
-  transition: all 0.3s; 
+  transition: all 0.3s;
 }
 
 .button-upload:hover {

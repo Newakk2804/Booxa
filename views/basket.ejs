@@ -6,31 +6,40 @@
       </div>
       <div class="basket-content">
         <div class="basket-list">
-          <% items.forEach(item => { %>
-            <div class="basket-item">
-              <div class="basket-img">
-                <img src="<%= item.imageUrl %>" alt="">
-              </div>
-              <div class="basket-item-content">
-                <div class="block-basket-content">
-                  <p class="text-basket-content">название: <%= item.title %></p>
-                  <p class="text-basket-content">жанр: <%= item.genres %></p>
-                  <p class="text-basket-content">автор: <%= item.author %></p>
+          <% if (items.length !== 0) { %>
+            <% items.forEach(item=> { %>
+              <div class="basket-item">
+                <div class="basket-img">
+                  <img src="<%= item.imageUrl %>" alt="">
                 </div>
-                <div class="basket-content-button-price">
-                  <p class="text-basket-price"><%= item.price %> BYN</p>
-                  <button type="button" class="button-basket-delete"><img src="img/delete.svg" alt=""></button>
+                <div class="basket-item-content">
+                  <div class="block-basket-content">
+                    <p class="text-basket-content">название: <%= item.title %>
+                    </p>
+                    <p class="text-basket-content">жанр: <%= item.genres %>
+                    </p>
+                    <p class="text-basket-content">автор: <%= item.author %>
+                    </p>
+                  </div>
+                  <div class="basket-content-button-price">
+                    <p class="text-basket-price">
+                      <%= item.price %> BYN
+                    </p>
+                    <button type="button" class="button-basket-delete"><img src="img/delete.svg" alt=""></button>
+                  </div>
                 </div>
               </div>
             </div>
-          <% }) %>
-        </div>
-        <div class="basket-button-price">
-          <p class="text-basket">Общая стоимость: <%= totalPrice %> BYN</p>
-          <a href="#" class="button-basket">
-            заказать
-          </a>
-        </div>
+            <div class="basket-button-price">
+              <p class="text-basket">Общая стоимость: <%= totalPrice %> BYN</p>
+              <a href="#" class="button-basket">
+                заказать
+              </a>
+            </div>
+              <% }) %>
+                <% } else { %>
+                  <p class="empty-basket">корзина пуста</p>
+                  <% } %>
       </div>
     </div>
   </section>

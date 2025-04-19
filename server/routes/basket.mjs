@@ -6,25 +6,25 @@ const router = Router();
 
 router.get('/basket', async (req, res) => {
   const userId = req.session.userId;
-
+  let totalPrice = 0;
+  let basket;
   try {
-    const basket = await Basket.findOne({ owner: userId }).populate('items');
+    basket = await Basket.findOne({ owner: userId }).populate('items');
 
     if (!basket) {
-      return res.send('Корзина не найдена');
+      basket = await Basket.create({ owner: userId, items: [] });
     }
 
-    let totalPrice = 0;
+    const locals = {
+      title: 'Корзина',
+      items: basket.items,
+    };
 
     basket.items.forEach((item) => {
       totalPrice += item.price;
     });
 
-    const locals = {
-      title: 'Корзина',
-      items: basket.items,
-      totalPrice: totalPrice,
-    };
+    locals.totalPrice = totalPrice;
     res.render('basket', locals);
   } catch (error) {
     console.log(error);

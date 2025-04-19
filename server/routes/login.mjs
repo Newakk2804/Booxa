@@ -21,13 +21,22 @@ router.post('/login', async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
-  }
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    req.session.userId = user.id;
 
     res.redirect('/');
   } catch (error) {
     console.log(error);
   }
+});
+
+router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) return res.send('Ошибка выхода');
+    res.redirect('/');
+  });
 });
 
 export default router;

@@ -39,10 +39,19 @@
   </div>
 </header>
 <div class="slide-panel-header" id="slide-panel">
-  <a href="/login" class="slide-panel-link">
-    <p>Войти</p>
-  </a>
-  <a href="/register" class="slide-panel-link">
-    <p>Регистрация</p>
-  </a>
+  <% if (session.userId) { %>
+    <a href="/profile" class="slide-panel-link">
+      <p>Личный кабинет</p>
+    </a>
+    <a href="/logout" class="slide-panel-link">
+      <p>Выйти</p>
+    </a>
+    <% } else { %>
+      <a href="/login" class="slide-panel-link">
+        <p>Войти</p>
+      </a>
+      <a href="/register" class="slide-panel-link">
+        <p>Регистрация</p>
+      </a>
+      <% } %>
 </div>

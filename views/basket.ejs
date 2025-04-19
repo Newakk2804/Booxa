@@ -6,60 +6,27 @@
       </div>
       <div class="basket-content">
         <div class="basket-list">
-          <div class="basket-item">
-            <p class="number-item">1</p>
-            <div class="basket-img">
-              <img src="" alt="">
-            </div>
-            <div class="basket-item-content">
-              <div class="block-basket-content">
-                <p class="text-basket-content">название</p>
-                <p class="text-basket-content">жанр</p>
-                <p class="text-basket-content">автор</p>
+          <% items.forEach(item => { %>
+            <div class="basket-item">
+              <div class="basket-img">
+                <img src="<%= item.imageUrl %>" alt="">
               </div>
-              <div class="basket-content-button-price">
-                <p class="text-basket-price">100 BYN</p>
-                <button type="button" class="button-basket-delete"><img src="img/delete.svg" alt=""></button>
-              </div>
-            </div>
-          </div>
-          <div class="basket-item">
-            <p class="number-item">2</p>
-            <div class="basket-img">
-              <img src="" alt="">
-            </div>
-            <div class="basket-item-content">
-              <div class="block-basket-content">
-                <p class="text-basket-content">название</p>
-                <p class="text-basket-content">жанр</p>
-                <p class="text-basket-content">автор</p>
-              </div>
-              <div class="basket-content-button-price">
-                <p class="text-basket-price">100 BYN</p>
-                <button type="button" class="button-basket-delete"><img src="img/delete.svg" alt=""></button>
+              <div class="basket-item-content">
+                <div class="block-basket-content">
+                  <p class="text-basket-content">название: <%= item.title %></p>
+                  <p class="text-basket-content">жанр: <%= item.genres %></p>
+                  <p class="text-basket-content">автор: <%= item.author %></p>
+                </div>
+                <div class="basket-content-button-price">
+                  <p class="text-basket-price"><%= item.price %> BYN</p>
+                  <button type="button" class="button-basket-delete"><img src="img/delete.svg" alt=""></button>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="basket-item">
-            <p class="number-item">3</p>
-            <div class="basket-img">
-              <img src="" alt="">
-            </div>
-            <div class="basket-item-content">
-              <div class="block-basket-content">
-                <p class="text-basket-content">название</p>
-                <p class="text-basket-content">жанр</p>
-                <p class="text-basket-content">автор</p>
-              </div>
-              <div class="basket-content-button-price">
-                <p class="text-basket-price">100 BYN</p>
-                <button type="button" class="button-basket-delete"><img src="img/delete.svg" alt=""></button>
-              </div>
-            </div>
-          </div>
+          <% }) %>
         </div>
         <div class="basket-button-price">
-          <p class="text-basket">Общая стоимость: 300 BYN</p>
+          <p class="text-basket">Общая стоимость: <%= totalPrice %> BYN</p>
           <a href="#" class="button-basket">
             заказать
           </a>

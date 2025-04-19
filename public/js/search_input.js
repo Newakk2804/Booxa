@@ -2,10 +2,7 @@ const search_input = document.getElementById('search-field');
 
 search_input.addEventListener('change', async (e) => {
   const valueInput = e.target.value;
-  const params = new URLSearchParams({
-    ...valueInput,
-  });
-
+  
   try {
     const response = await fetch(`/search-by-search-field?value=${valueInput.toString()}`);
     const books = await response.json();

@@ -93,7 +93,6 @@ router.get('/search-by-params', async (req, res) => {
 router.get('/search-by-search-field', async (req, res) => {
   try {
     const { value } = req.query;
-    console.log(value);
 
     const books = await Book.find({
       $or: [

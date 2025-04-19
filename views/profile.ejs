@@ -11,10 +11,22 @@
             <img src="" alt="">
           </div>
           <div class="profile-description">
-            <p class="text-profile">Фамилия: <%= user.surname %></p>
-            <p class="text-profile">Имя: <%= user.name %></p>
-            <p class="text-profile">Почта: <%= user.mail %></p>
-            <p class="text-profile">Адрес проживания: <%= user.address %></p>
+            <div class="block-text-input">
+              <p class="text-profile">Фамилия: </p> 
+              <input id="input-surname" type="text" value="<%= user.surname %>">
+            </div>
+            <div class="block-text-input">
+              <p class="text-profile">Имя: </p>
+              <input id="input-name" type="text" value="<%= user.name %>">
+            </div>
+            <div class="block-text-input">
+              <p class="text-profile">Почта: </p>
+              <input id="input-mail" type="text" value="<%= user.mail %>" readonly>
+            </div>            
+            <div class="block-text-input">
+              <p class="text-profile">Адрес проживания: </p>
+              <input id="input-address" type="text" value="<%= user.address %>">
+            </div>
           </div>
         </div>
         <div class="profile-order">

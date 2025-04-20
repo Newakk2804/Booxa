@@ -32,6 +32,17 @@ router.get('/basket', async (req, res) => {
   }
 });
 
+router.get('/basket/count', async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const basket = await Basket.findOne({ owner: userId });
+    const count = basket ? basket.items.length : 0;
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ count: 0 });
+  }
+});
+
 router.get('/basket/:id', async (req, res) => {
   const userId = req.session.userId;
   const bookId = req.params.id;

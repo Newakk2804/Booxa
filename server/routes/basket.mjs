@@ -48,7 +48,7 @@ router.get('/basket/:id', async (req, res) => {
       }
     }
 
-    res.send('Книга добавлена в корзину');
+    res.json(basket);
   } catch (error) {
     console.log(error);
     res.send('Ошибка добавления в корзину');

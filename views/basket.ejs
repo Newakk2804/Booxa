@@ -6,7 +6,7 @@
       </div>
       <div class="basket-content">
         <div class="basket-list">
-          <% if (items.length !== 0) { %>
+          <% if (items.length !==0) { %>
             <% items.forEach(item=> { %>
               <div class="basket-item">
                 <div class="basket-img">
@@ -29,17 +29,17 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="basket-button-price">
-              <p class="text-basket">Общая стоимость: <%= totalPrice %> BYN</p>
-              <a href="#" class="button-basket">
-                заказать
-              </a>
-            </div>
               <% }) %>
-                <% } else { %>
-                  <p class="empty-basket">корзина пуста</p>
-                  <% } %>
+                <div class="basket-button-price">
+                  <p class="text-basket">Общая стоимость: <%= totalPrice %> BYN</p>
+                  <a href="#" class="button-basket">
+                    заказать
+                  </a>
+                </div>
+        </div>
+        <% } else { %>
+          <p class="empty-basket">корзина пуста</p>
+          <% } %>
       </div>
     </div>
   </section>

@@ -1361,15 +1361,16 @@ footer {
 
 .cart-count {
   position: absolute;
-  top: 25px;
-  right: 125px;
-  background-color: red;
-  color: white;
+  top: 22px;
+  right: 122px;
+  background-color: #7fa5a3;
+  color: #1a1a1a;
   font-size: 12px;
   font-weight: bold;
-  padding: 2px 6px;
+  padding: 4px 8px;
   border-radius: 50%;
   line-height: 1;
+  font-size: 14px;
   min-width: 20px;
   text-align: center;
 }

@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import Basket from '../models/Basket.mjs';
+import Order from '../models/Orders.mjs';
+import User from '../models/Users.mjs';
 
 const router = Router();
 
@@ -43,11 +45,50 @@ router.get('/basket/total', async (req, res) => {
 
     if (!basket) return res.json({ total: 0 });
 
-    const total = basket.items.reduce((sum, item) => (sum + item.price), 0);
+    const total = basket.items.reduce((sum, item) => sum + item.price, 0);
     res.json({ total });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Ошибка при подсчете общей стоимости' });
+  }
+});
+
+router.get('/basket/order', async (req, res) => {
+  const userId = req.session.userId;
+  const basket = await Basket.findOne({ owner: userId }).populate('items');
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.status(400).json({ message: 'Пользователь не найден.' });
+  }
+
+  if (!basket) {
+    return res.status(400).json({ message: 'Корзина пуста.' });
+  }
+
+  const totalPrice = basket.items.reduce((sum, item) => sum + item.price, 0);
+
+  if (!user.address) {
+    return res.json({
+      message: 'Для оформления заказа, введите в своем личном кабинете адрес проживания.',
+      success: false,
+    });
+  }
+
+  try {
+    const order = await Order.create({
+      items: basket.items.map((book) => book._id),
+      owner: userId,
+      price: totalPrice,
+      status: 'В обработке',
+    });
+
+    basket.items = [];
+    await basket.save();
+
+    res.json({ message: 'Заказ оформлен.', success: true });
+  } catch (error) {
+    res.status(500).json({ message: 'Ошибка при оформлении заказа.', success: false });
   }
 });
 

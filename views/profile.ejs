@@ -41,7 +41,19 @@
             <p class="text-profile-order-title">Заказы</p>
           </div>
           <div class="profile-list">
-            <div class="profile-item">
+            <% if (orders.length !== 0) { %>
+              <% orders.forEach(order => { %>
+                <div class="profile-item">
+                <p class="text-profile-order">дата: <%= order.formattedDate %></p>
+                <p class="text-profile-order">количество товаров: <%= order.items.length %></p>
+                <p class="text-profile-order">стоимость: <%= order.price %> BYN</p>
+                  <p class="text-profile-order">статус: <%= order.status %></p>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <p class="empty-orders">нет заказов</p>
+              <% } %>
+            <!-- <div class="profile-item">
               <p class="text-profile-order">дата: 01.01.2020</p>
               <p class="text-profile-order">количество товаров: 2</p>
               <p class="text-profile-order">стоимость: 200 BYN</p>
@@ -52,13 +64,7 @@
               <p class="text-profile-order">количество товаров: 2</p>
               <p class="text-profile-order">стоимость: 200 BYN</p>
               <p class="text-profile-order">статус: доставлен</p>
-            </div>
-            <div class="profile-item">
-              <p class="text-profile-order">дата: 01.01.2020</p>
-              <p class="text-profile-order">количество товаров: 2</p>
-              <p class="text-profile-order">стоимость: 200 BYN</p>
-              <p class="text-profile-order">статус: доставлен</p>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

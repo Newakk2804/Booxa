@@ -1,20 +1,35 @@
 import { Router } from 'express';
 import User from '../models/Users.mjs';
+import Order from '../models/Orders.mjs';
 import { authMiddleware } from '../utils/middlewares.mjs';
 import upload from '../utils/upload.mjs';
+import moment from 'moment';
 import path from 'path';
 import fs from 'fs';
 
 const router = Router();
 
 router.get('/profile', authMiddleware, async (req, res) => {
-  const findUser = await User.findById(req.session.userId);
+  const userId = req.session.userId;
+  const findUser = await User.findById(userId);
 
   if (!findUser) return res.send('Пользователь не найден');
+
+  let orders = await Order.find({ owner: userId });
+
+  if (!orders) {
+    orders = await Order.create({ owner: userId, items: [], price: 0, status: 'В обработке' });
+  }
+
+  orders = orders.map((order) => ({
+    ...order.toObject(),
+    formattedDate: moment(order.createdAt).format('DD.MM.YYYY'),
+  }));
 
   const locals = {
     title: 'Личный кабинет',
     user: findUser,
+    orders: orders,
   };
   res.render('profile', locals);
 });

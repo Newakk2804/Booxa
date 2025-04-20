@@ -122,10 +122,12 @@ router.get('/basket/:id', async (req, res) => {
       if (!basket.items.includes(bookId)) {
         basket.items.push(bookId);
         await basket.save();
+      } else {
+        return res.json({ message: 'Такая книга уже есть в корзине.' });
       }
     }
 
-    res.json(basket);
+    res.json({ message: 'Книга добавлена в корзину.' });
   } catch (error) {
     console.log(error);
     res.send('Ошибка добавления в корзину');

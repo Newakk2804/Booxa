@@ -1,4 +1,4 @@
-export function showToast(message) {
+export function showToast(message, time) {
   const backdrop = document.getElementById('toast-backdrop');
   const toast = document.getElementById('toast');
   const messageContainer = document.getElementById('toast-message');
@@ -17,5 +17,5 @@ export function showToast(message) {
     setTimeout(() => {
       backdrop.classList.add('hidden');
     }, 300);
-  }, 3000);
+  }, time);
 }

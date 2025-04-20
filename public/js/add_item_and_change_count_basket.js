@@ -1,3 +1,5 @@
+import { showToast } from './toast.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
   const basketCounter = document.getElementById('basket-counter');
 
@@ -20,12 +22,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       try {
         const response = await fetch(`/basket/${id_item}`);
+        const data = await response.json();
         if (response.ok) {
           const countResponse = await fetch('/basket/count');
-          const data = await countResponse.json();
-          basketCounter.textContent = data.count;
+          const count = await countResponse.json();
+          basketCounter.textContent = count.count;
+          showToast(data.message, 1500);
         } else {
-          console.error('Ошибка при добавлении товара');
+          showToast('Ошибка при добавлении товара. Попробуйте позже.', 3000);
         }
       } catch (error) {
         console.error('Ошибка сети: ', error);

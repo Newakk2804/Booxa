@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const res = await fetch('/basket/order');
         const data = await res.json();
 
-        showToast(data.message);
+        showToast(data.message, 3000);
 
         if (data.success) {
           const countResponse = await fetch('/basket/count');

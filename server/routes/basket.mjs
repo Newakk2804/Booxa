@@ -1,12 +1,10 @@
 import { Router } from 'express';
-import Book from '../models/Books.mjs';
 import Basket from '../models/Basket.mjs';
 
 const router = Router();
 
 router.get('/basket', async (req, res) => {
   const userId = req.session.userId;
-  let totalPrice = 0;
   let basket;
   try {
     basket = await Basket.findOne({ owner: userId }).populate('items');
@@ -20,11 +18,6 @@ router.get('/basket', async (req, res) => {
       items: basket.items,
     };
 
-    basket.items.forEach((item) => {
-      totalPrice += item.price;
-    });
-
-    locals.totalPrice = totalPrice;
     res.render('basket', locals);
   } catch (error) {
     console.log(error);
@@ -40,6 +33,38 @@ router.get('/basket/count', async (req, res) => {
     res.json({ count });
   } catch (err) {
     res.status(500).json({ count: 0 });
+  }
+});
+
+router.get('/basket/total', async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const basket = await Basket.findOne({ owner: userId }).populate('items');
+
+    if (!basket) return res.json({ total: 0 });
+
+    const total = basket.items.reduce((sum, item) => (sum + item.price), 0);
+    res.json({ total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ошибка при подсчете общей стоимости' });
+  }
+});
+
+router.delete('/basket/:id', async (req, res) => {
+  const userId = req.session.userId;
+  const bookId = req.params.id;
+
+  try {
+    const basket = await Basket.findOne({ owner: userId });
+
+    basket.items = basket.items.filter((item) => item.toString() !== bookId);
+
+    await basket.save();
+    return res.json({ message: 'Товар удален из корзины' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Ошибка сервера' });
   }
 });
 

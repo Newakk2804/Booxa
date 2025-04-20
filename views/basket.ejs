@@ -8,7 +8,7 @@
         <div class="basket-list">
           <% if (items.length !==0) { %>
             <% items.forEach(item=> { %>
-              <div class="basket-item">
+              <div class="basket-item" data-id="<%= item._id %>">
                 <div class="basket-img">
                   <img src="<%= item.imageUrl %>" alt="">
                 </div>
@@ -25,13 +25,13 @@
                     <p class="text-basket-price">
                       <%= item.price %> BYN
                     </p>
-                    <button type="button" class="button-basket-delete"><img src="img/delete.svg" alt=""></button>
+                    <button type="button" class="button-basket-delete" data-id="<%= item._id %>"><img src="img/delete.svg" alt=""></button>
                   </div>
                 </div>
               </div>
               <% }) %>
                 <div class="basket-button-price">
-                  <p class="text-basket">Общая стоимость: <%= totalPrice %> BYN</p>
+                  <p class="text-basket">Общая стоимость: <span id="basket-total">0</span> BYN</p>
                   <a href="#" class="button-basket">
                     заказать
                   </a>

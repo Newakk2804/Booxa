@@ -2,10 +2,13 @@ import mongoose from 'mongoose';
 
 const OrderSchema = mongoose.Schema(
   {
-    numberOfItems: {
-      type: mongoose.Schema.Types.Number,
-      required: true,
-    },
+    items: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book',
+        required: true,
+      },
+    ],
     price: {
       type: mongoose.Schema.Types.Number,
       required: true,

@@ -54,7 +54,7 @@
                   <button class="open-order-details" data-id="<%= order._id %>"><img src="/img/eye.svg" alt=""></button>
                   <button type="button"
                     class="button-profile-delete<%= order.status !== 'В обработке' ? ' disabled' : '' %>" <% if
-                    (order.status !=='В обработке' ) { %> disabled title="Удаление доступно только на стадии 'В обработке'" <% } %>>
+                    (order.status !=='В обработке' ) { %> disabled <% } %>>
                       <img src="img/delete.svg" alt="">
                   </button>
                 </div>

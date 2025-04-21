@@ -120,32 +120,29 @@ router.get('/all-orders', async (req, res) => {
 });
 
 router.patch('/update-order-status/:id', async (req, res) => {
-  let { status } = req.body;  // Извлекаем статус из тела запроса
-  const { id } = req.params;  // Получаем ID заказа из параметра URL
+  let { status } = req.body;
+  const { id } = req.params;
 
-  // Проверяем, передан ли статус и является ли он строкой
   if (!status || typeof status !== 'string') {
     return res.status(400).json({ message: 'Статус должен быть строкой и не может быть пустым' });
   }
 
-  // Обрезаем пробелы в статусе
   status = status.trim();
 
   const validStatuses = ['В обработке', 'Собирается на складе', 'В пути до получателя', 'Доставлен', 'Отменен'];
   
-  // Проверяем, существует ли статус в списке допустимых
   if (!validStatuses.includes(status)) {
-    console.log(`Получен некорректный статус: "${status}"`);  // Для отладки
+    console.log(`Получен некорректный статус: "${status}"`);
     return res.status(400).json({ message: 'Неверный статус' });
   }
 
   try {
-    const order = await Order.findById(id);  // Найдите заказ по ID
+    const order = await Order.findById(id);
     if (!order) {
       return res.status(404).json({ message: 'Заказ не найден' });
     }
 
-    order.status = status;  // Обновляем статус
+    order.status = status;
     await order.save();
 
     res.status(200).json({ message: 'Статус заказа обновлён успешно' });

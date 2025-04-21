@@ -548,7 +548,7 @@ main {
 }
 
 .pagination {
-  width: 268px;
+  min-width: 268px;
   height: 45px;
   display: flex;
   gap: 17px;
@@ -564,6 +564,14 @@ main {
   padding-bottom: 2px;
 }
 
+.arrow-left {
+  margin-left: 5px;
+}
+
+.arrow-right{
+  margin-right: 5px;
+}
+
 .pagination-page .text-pagination {
   font-weight: 400;
   font-size: 18px;
@@ -572,6 +580,17 @@ main {
   transition: all 0.3s ease;
   border-radius: 8px;
   padding: 5px;
+}
+
+.pagination-page .text-pagination-ellipses {
+  font-weight: 400;
+  font-size: 18px;
+  color: #1a1a1a;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 5px;
+  cursor: pointer;
 }
 
 .pagination-page .text-pagination:hover {

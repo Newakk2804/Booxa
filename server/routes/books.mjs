@@ -7,31 +7,83 @@ import fs from 'fs';
 const router = Router();
 
 router.get('/', async (req, res) => {
-  const locals = {
-    title: 'Главная',
-  };
+  const locals = { title: 'Главная' };
 
-  const allBooks = await Book.find();
-  const [allGenres, allAuthors, allPublishingHouse, allYearOfPublication, allLanguages] =
-    await Promise.all([
+  const page = parseInt(req.query.page) || 1;
+  const limit = 5;
+  const skip = (page - 1) * limit;
+
+  try {
+    const [
+      allBooks,
+      totalBooks,
+      allGenres,
+      allAuthors,
+      allPublishingHouse,
+      allYearOfPublication,
+      allLanguages,
+      popularBooks,
+    ] = await Promise.all([
+      Book.find().skip(skip).limit(limit),
+      Book.countDocuments(),
       Book.distinct('genres'),
       Book.distinct('author'),
       Book.distinct('publishingHouse'),
       Book.distinct('yearOfPublication'),
       Book.distinct('language'),
+      Book.find().sort({ numberOfViews: -1 }).limit(3),
     ]);
-  const popularBooks = await Book.find().sort({ numberOfViews: -1 }).limit(3);
 
-  res.render('books', {
-    locals,
-    allBooks,
-    allGenres,
-    allAuthors,
-    allPublishingHouse,
-    allYearOfPublication,
-    allLanguages,
-    popularBooks,
-  });
+    const totalPages = Math.ceil(totalBooks / limit);
+
+    // Страницы для отображения в пагинации
+    const pagination = [];
+
+    if (totalPages <= 7) {
+      // если страниц немного, показать все
+      for (let i = 1; i <= totalPages; i++) {
+        pagination.push(i);
+      }
+    } else {
+      // всегда показываем первую страницу
+      pagination.push(1);
+
+      // вставляем многоточие, если нужно
+      if (page > 3) pagination.push('...');
+
+      // отображаем страницы вокруг текущей
+      const start = Math.max(2, page - 1);
+      const end = Math.min(totalPages - 1, page + 1);
+
+      for (let i = start; i <= end; i++) {
+        pagination.push(i);
+      }
+
+      // снова многоточие, если нужно
+      if (page < totalPages - 2) pagination.push('...');
+
+      // последняя страница
+      pagination.push(totalPages);
+    }
+
+    res.render('books', {
+      locals,
+      allBooks,
+      allGenres,
+      allAuthors,
+      allPublishingHouse,
+      allYearOfPublication,
+      allLanguages,
+      popularBooks,
+      currentPage: page,
+      totalPages,
+      pagination, // добавлено
+      user: req.user,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Ошибка сервера');
+  }
 });
 
 router.get('/add-new-book', (req, res) => {

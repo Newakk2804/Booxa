@@ -150,25 +150,27 @@
   <div class="container">
     <section class="section-pagination">
       <div class="pagination">
-        <a href="#"><img src="img/arrow-left.svg" alt=""></a>
+        <% if (currentPage > 1) { %>
+          <a href="/?page=<%= currentPage - 1 %>" class="arrow-left">
+            <img src="/img/arrow-left.svg" alt="назад">
+          </a>
+        <% } %>
         <div class="pagination-page">
-          <a href="#">
-            <p class="text-pagination active">1</p>
-          </a>
-          <a href="#">
-            <p class="text-pagination">2</p>
-          </a>
-          <a href="#">
-            <p class="text-pagination">3</p>
-          </a>
-          <a href="#">
-            <p class="text-pagination">4</p>
-          </a>
-          <a href="#">
-            <p class="text-pagination">5</p>
-          </a>
+          <% pagination.forEach(p => { %>
+            <% if (p === '...') { %>
+              <span class="text-pagination-ellipses">...</span>
+            <% } else { %>
+              <a href="/?page=<%= p %>">
+                <p class="text-pagination <%= p === currentPage ? 'active' : '' %>"><%= p %></p>
+              </a>
+            <% } %>
+          <% }) %>
         </div>
-        <a href="#"><img src="img/arrow-right.svg" alt=""></a>
+        <% if (currentPage < totalPages) { %>
+          <a href="/?page=<%= currentPage + 1 %>" class="arrow-right">
+            <img src="/img/arrow-right.svg" alt="вперёд">
+          </a>
+        <% } %>
       </div>
     </section>
   </div>

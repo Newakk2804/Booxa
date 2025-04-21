@@ -36,22 +36,17 @@ router.get('/', async (req, res) => {
 
     const totalPages = Math.ceil(totalBooks / limit);
 
-    // Страницы для отображения в пагинации
     const pagination = [];
 
     if (totalPages <= 7) {
-      // если страниц немного, показать все
       for (let i = 1; i <= totalPages; i++) {
         pagination.push(i);
       }
     } else {
-      // всегда показываем первую страницу
       pagination.push(1);
 
-      // вставляем многоточие, если нужно
       if (page > 3) pagination.push('...');
 
-      // отображаем страницы вокруг текущей
       const start = Math.max(2, page - 1);
       const end = Math.min(totalPages - 1, page + 1);
 
@@ -59,10 +54,8 @@ router.get('/', async (req, res) => {
         pagination.push(i);
       }
 
-      // снова многоточие, если нужно
       if (page < totalPages - 2) pagination.push('...');
 
-      // последняя страница
       pagination.push(totalPages);
     }
 
@@ -77,7 +70,7 @@ router.get('/', async (req, res) => {
       popularBooks,
       currentPage: page,
       totalPages,
-      pagination, // добавлено
+      pagination,
       user: req.user,
     });
   } catch (error) {

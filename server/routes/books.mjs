@@ -34,6 +34,50 @@ router.get('/', async (req, res) => {
   });
 });
 
+router.get('/add-new-book', (req, res) => {
+  const locals = {
+    title: 'Добавление новой книги',
+  };
+
+  res.render('add_new_book', locals);
+});
+
+router.post('/add-new-book', upload.single('imageUrl'), async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      genres,
+      author,
+      publishingHouse,
+      yearOfPublication,
+      language,
+      numberOfBooks,
+      price,
+    } = req.body;
+
+    const newBook = new Book({
+      title,
+      description,
+      genres: genres.split(',').map((g) => g.trim()),
+      author,
+      publishingHouse,
+      yearOfPublication: Number(yearOfPublication),
+      language,
+      numberOfBooks: Number(numberOfBooks),
+      price: Number(price),
+      imageUrl: req.file ? `uploads/${req.file.filename}` : '',
+      numberOfViews: 0,
+    });
+
+    await newBook.save();
+    res.json({ message: 'Книга успешно добавлена.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ошибка при добавлении книги' });
+  }
+})
+
 router.get('/detail-book/:id', async (req, res) => {
   const idBook = req.params.id;
   const findBook = await Book.findByIdAndUpdate(
@@ -104,9 +148,9 @@ router.post('/edit-book/:id', upload.single('imageUrl'), async (req, res) => {
       genres: genres.split(',').map((g) => g.trim()),
       author,
       publishingHouse,
-      yearOfPublication,
+      yearOfPublication: Number(yearOfPublication),
       language,
-      numberOfBooks,
+      numberOfBooks: Number(numberOfBooks),
       price: Number(price),
     };
 

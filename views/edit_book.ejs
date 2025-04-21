@@ -8,7 +8,7 @@
         <div class="block-edit">
           <div class="block-content-edit">
             <div class="block-img-edit">
-              <img id="preview-image" src="<%= book.imageUrl %>" alt="">
+              <img id="preview-image" src="/<%= book.imageUrl %>" alt="">
               <div class="file-upload">
                 <label class="file-upload-label" for="imageUrl">выбрать фото</label>
                 <input type="file" name="imageUrl" id="imageUrl" accept="image/*"/>
@@ -18,9 +18,7 @@
               <p class="text-edit-content">Название:</p>
               <input type="text" class="input-edit-content" name="title" value="<%= book.title %>">
               <p class="text-edit-content">Аннотация:</p>
-              <textarea class="textarea-edit-content" name="description">
-              <%= book.description %>
-              </textarea>
+              <textarea class="textarea-edit-content" name="description"><%= book.description %></textarea>
               <p class="text-edit-content">Жанр:</p>
               <input type="text" class="input-edit-content" name="genres" value="<%= book.genres %>">
               <p class="text-edit-content">Автор:</p>

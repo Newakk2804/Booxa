@@ -1,0 +1,46 @@
+<main>
+  <div class="container">
+    <section class="section-new-book">
+      <div class="block-title">
+        <p class="text-new-title">Добавление новой книги</p>
+      </div>
+      <form action="/add-new-book" method="POST" class="form-new-book" enctype="multipart/form-data">
+        <div class="block-new">
+          <div class="block-content-new">
+            <div class="block-img-new">
+              <img id="preview-image" src="" alt="">
+              <div class="file-upload">
+                <label class="file-upload-label" for="imageUrl">выбрать фото</label>
+                <input type="file" name="imageUrl" id="imageUrl" accept="image/*"/>
+              </div>
+            </div>
+            <div class="block-text-new">
+              <p class="text-new-content">Название:</p>
+              <input type="text" class="input-new-content" name="title" placeholder="Введите название книги...">
+              <p class="text-new-content">Аннотация:</p>
+              <textarea class="textarea-new-content" name="description" placeholder="Введите аннотацию книги..."></textarea>
+              <p class="text-new-content">Жанр:</p>
+              <input type="text" class="input-new-content" name="genres" placeholder="Введите жанры книги через запятую...">
+              <p class="text-new-content">Автор:</p>
+              <input type="text" class="input-new-content" name="author" placeholder="Введите автора книги...">
+              <p class="text-new-content">Издательство:</p>
+              <input type="text" class="input-new-content" name="publishingHouse" placeholder="Введите название издательства...">
+              <p class="text-new-content">Год издания:</p>
+              <input type="text" class="input-new-content" name="yearOfPublication" placeholder="Введите год издания...">
+              <p class="text-new-content">Язык:</p>
+              <input type="text" class="input-new-content" name="language" placeholder="Введите язык книги...">
+              <p class="text-new-content">Количество страниц</p>
+              <input type="text" class="input-new-content" name="numberOfBooks" placeholder="Введите количество книг...">
+              <p class="text-new-content">Цена:</p>
+              <input type="text" class="input-new-content" name="price" placeholder="Введите цену книги...">
+            </div>
+          </div>
+          <div class="block-btn">
+            <a href="#" onclick="history.back(); return false;" class="btn-close"><span>Отмена</span></a>
+            <button type="submit" class="btn-new">Сохранить</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>

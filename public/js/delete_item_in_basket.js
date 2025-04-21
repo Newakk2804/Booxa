@@ -1,6 +1,9 @@
+import { showToast } from './toast.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   const basketCounter = document.getElementById('basket-counter');
   const basketTotal = document.getElementById('basket-total');
+  const basketList = document.querySelector('.basket-list');
 
   async function updateBasketCount() {
     try {
@@ -32,14 +35,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         const response = await fetch(`/basket/${bookId}`, { method: 'DELETE' });
+        const data = await response.json();
 
         if (response.ok) {
           const itemElement = document.querySelector(`.basket-item[data-id="${bookId}"]`);
           if (itemElement) itemElement.remove();
 
+          const nextItemElement = document.querySelector(`.basket-item[data-id="${bookId}"]`) || undefined;
+
+          if(nextItemElement === undefined) {
+            basketList.innerHTML = '<p class="empty-basket">корзина пуста</p>';
+          }
+
+          showToast(data.message, 2000);
+
           updateBasketCount();
           updateBasketTotal();
         } else {
+          showToast('Не удалось удалить товар из корзины', 2000);
           console.error('Не удалось удалить товар из корзины');
         }
       } catch (error) {

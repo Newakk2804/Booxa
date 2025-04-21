@@ -28,9 +28,7 @@ confirmBtn.addEventListener('click', async () => {
     });
 
     if (response.ok) {
-      // Можно показать toast
       showToast('Книга успешно удалена', 2000);
-      // Перезагрузка или перенаправление
       setTimeout(() => {
         window.location.href = '/';
       }, 3000);

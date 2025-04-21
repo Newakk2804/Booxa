@@ -6,7 +6,6 @@ document.querySelectorAll('.update-status-btn').forEach(button => {
     const orderId = form.dataset.id;
     const status = form.querySelector('.order-status').value;
 
-    // Покажем модальное окно подтверждения
     const modal = document.getElementById('status-modal');
     const confirmBtn = document.getElementById('confirm-status-btn');
     const cancelBtn = document.getElementById('cancel-status-btn');
@@ -14,7 +13,6 @@ document.querySelectorAll('.update-status-btn').forEach(button => {
 
     modal.classList.remove('hidden');
     
-    // Обработчик для подтверждения изменения статуса
     confirmBtn.addEventListener('click', async () => {
       try {
         const response = await fetch(`/update-order-status/${orderId}`, {
@@ -38,7 +36,6 @@ document.querySelectorAll('.update-status-btn').forEach(button => {
       modal.classList.add('hidden');
     });
 
-    // Отмена действия
     cancelBtn.addEventListener('click', () => {
       modal.classList.add('hidden');
     });

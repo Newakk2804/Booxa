@@ -6,12 +6,10 @@ export function showToast(message, time) {
   messageContainer.textContent = message;
   backdrop.classList.remove('hidden');
 
-  // Показ
   setTimeout(() => {
     backdrop.classList.add('show');
   }, 10);
 
-  // Скрытие через 3 секунды
   setTimeout(() => {
     backdrop.classList.remove('show');
     setTimeout(() => {

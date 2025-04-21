@@ -1,0 +1,49 @@
+<main>
+  <div class="container">
+    <section class="section-edit-book">
+      <div class="block-title">
+        <p class="text-edit-title">Редактирование книги</p>
+      </div>
+      <form action="/edit-book/<%= book._id %>" method="POST" class="form-edit-book" enctype="multipart/form-data">
+        <div class="block-edit">
+          <div class="block-content-edit">
+            <div class="block-img-edit">
+              <img id="preview-image" src="<%= book.imageUrl %>" alt="">
+              <div class="file-upload">
+                <label class="file-upload-label" for="imageUrl">выбрать фото</label>
+                <input type="file" name="imageUrl" id="imageUrl" accept="image/*"/>
+              </div>
+            </div>
+            <div class="block-text-edit">
+              <p class="text-edit-content">Название:</p>
+              <input type="text" class="input-edit-content" name="title" value="<%= book.title %>">
+              <p class="text-edit-content">Аннотация:</p>
+              <textarea class="textarea-edit-content" name="description">
+              <%= book.description %>
+              </textarea>
+              <p class="text-edit-content">Жанр:</p>
+              <input type="text" class="input-edit-content" name="genres" value="<%= book.genres %>">
+              <p class="text-edit-content">Автор:</p>
+              <input type="text" class="input-edit-content" name="author" value="<%= book.author %>">
+              <p class="text-edit-content">Издательство:</p>
+              <input type="text" class="input-edit-content" name="publishingHouse" value="<%= book.publishingHouse %>">
+              <p class="text-edit-content">Год издания:</p>
+              <input type="text" class="input-edit-content" name="yearOfPublication"
+                value="<%= book.yearOfPublication %>">
+              <p class="text-edit-content">Язык:</p>
+              <input type="text" class="input-edit-content" name="language" value="<%= book.language %>">
+              <p class="text-edit-content">Количество страниц</p>
+              <input type="text" class="input-edit-content" name="numberOfBooks" value="<%= book.numberOfBooks %>">
+              <p class="text-edit-content">Цена:</p>
+              <input type="text" class="input-edit-content" name="price" value="<%= book.price %>">
+            </div>
+          </div>
+          <div class="block-btn">
+            <button type="button" class="btn-close">Отмена</button>
+            <button type="submit" class="btn-edit">Сохранить</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>

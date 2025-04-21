@@ -40,9 +40,18 @@
             <p class="text-price">
               <%= book.price %> BYN
             </p>
-            <a href="/basket/<%= book._id %>" class="button-card">
-              <p>в корзину</p>
-            </a>
+            <% if (user && user.role==='admin' ) { %>
+              <a href="#" class="button-card edit-item delete-book-btn" data-id="<%= book._id %>">
+                удалить
+              </a>
+              <a href="/edit-book/<%= book._id %>" class="button-card edit-item">
+                редактировать
+              </a>
+              <% } else { %>
+                <a class="button-card add-item-basket" data-id="<%= book._id %>">
+                  в корзину
+                </a>
+                <% }%>
           </div>
         </div>
       </div>
@@ -61,7 +70,7 @@
                 <p class="text-pop-card">
                   <%= book.title %>
                 </p>
-                <a href="detail_book/<%= book._id %>" class="button-more-details">
+                <a href="/detail-book/<%= book._id %>" class="button-more-details">
                   <p>подробнее</p>
                 </a>
               </div>
@@ -84,7 +93,7 @@
                       <p class="text-pop-card">
                         <%= book.title %>
                       </p>
-                      <a href="detail_book/<%= book._id %>" class="button-more-details">
+                      <a href="/detail-book/<%= book._id %>" class="button-more-details">
                         <p>подробнее</p>
                       </a>
                     </div>
@@ -101,17 +110,17 @@
                     <div class="pop-books-content">
                       <p class="text-pop-books underline">Книги автора "<%= book.author %>"</p>
                       <div class="cards-popular-books">
-                      <% bookAuthor.forEach(book=> { %>
-                        <div class="card-pop-books">
-                          <img src="<%= book.imageUrl %>" alt="">
-                          <p class="text-pop-card">
-                            <%= book.title %>
-                          </p>
-                          <a href="detail_book/<%= book._id %>" class="button-more-details">
-                            <p>подробнее</p>
-                          </a>
-                        </div>
-                        <% }) %>
+                        <% bookAuthor.forEach(book=> { %>
+                          <div class="card-pop-books">
+                            <img src="<%= book.imageUrl %>" alt="">
+                            <p class="text-pop-card">
+                              <%= book.title %>
+                            </p>
+                            <a href="/detail-book/<%= book._id %>" class="button-more-details">
+                              <p>подробнее</p>
+                            </a>
+                          </div>
+                          <% }) %>
                       </div>
                     </div>
                   </div>

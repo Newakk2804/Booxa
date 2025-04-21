@@ -128,12 +128,18 @@
                 </div>
               </div>
               <div class="card-content-button">
-                <a class="button-card add-item-basket" data-id="<%= book._id %>">
-                  в корзину
-                </a>
-                <a href="/detail-book/<%= book._id %>" class="button-card">
-                  подробнее
-                </a>
+                <% if (user && user.role==='admin' ) { %>
+                  <a href="/edit-book/<%= book._id %>" class="button-card edit-item">
+                    редактировать
+                  </a>
+                  <% } else { %>
+                    <a class="button-card add-item-basket" data-id="<%= book._id %>">
+                      в корзину
+                    </a>
+                    <% }%>
+                      <a href="/detail-book/<%= book._id %>" class="button-card">
+                        подробнее
+                      </a>
               </div>
             </div>
           </div>

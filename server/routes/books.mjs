@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import Book from '../models/Books.mjs';
+import upload from '../utils/upload.mjs';
+import path from 'path';
+import fs from 'fs';
 
 const router = Router();
 
@@ -66,6 +69,83 @@ router.get('/detail-book/:id', async (req, res) => {
   };
 
   res.render('detail_book', locals);
+});
+
+router.get('/edit-book/:id', async (req, res) => {
+  const bookId = req.params.id;
+
+  const findBook = await Book.findById(bookId);
+  const locals = {
+    title: 'Редактирование книги',
+    book: findBook,
+  };
+
+  res.render('edit_book', locals);
+});
+
+router.post('/edit-book/:id', upload.single('imageUrl'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      description,
+      genres,
+      author,
+      publishingHouse,
+      yearOfPublication,
+      language,
+      numberOfBooks,
+      price,
+    } = req.body;
+
+    const updateData = {
+      title,
+      description,
+      genres: genres.split(',').map((g) => g.trim()),
+      author,
+      publishingHouse,
+      yearOfPublication,
+      language,
+      numberOfBooks,
+      price: Number(price),
+    };
+
+    if (req.file) {
+      updateData.imageUrl = 'uploads/' + req.file.filename;
+    }
+
+    await Book.findByIdAndUpdate(id, updateData);
+
+    res.json({ message: 'Книга успешно обновлена.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ошибка при обновлении книги' });
+  }
+});
+
+router.delete('/delete-book/:id', async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+
+    if (!book) {
+      return res.status(404).json({ message: 'Книга не найдена' });
+    }
+    if (book.imageUrl) {
+      const filePath = path.join(process.cwd(), 'public', book.imageUrl);
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error('Ошибка при удалении изображения:', err.message);
+        }
+      });
+    }
+
+    await Book.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({ message: 'Книга удалена' });
+  } catch (error) {
+    console.error('Ошибка при удалении книги:', error);
+    res.status(500).json({ message: 'Ошибка при удалении' });
+  }
 });
 
 router.get('/search-by-params', async (req, res) => {

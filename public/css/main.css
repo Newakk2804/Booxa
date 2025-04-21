@@ -1233,7 +1233,7 @@ footer {
 
 .block-profile {
   width: 100%;
-  min-height: 770px;
+  min-height: 400px;
   margin-bottom: 100px;
   padding: 50px 50px 0 50px;
 }
@@ -1858,4 +1858,32 @@ footer {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+.profile-btn{
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.btn-admin{
+  width: 250px;
+  height: 45px;
+  background-color: #7fa5a3;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.btn-admin:hover {
+  background-color: #4e5d63;
 }

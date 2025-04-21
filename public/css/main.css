@@ -279,12 +279,12 @@ main {
 }
 
 .button__catalog:hover {
-  background-color: #4e5d63; /* фон при наведении */
-  color: #ffffff; /* цвет текста при наведении */
+  background-color: #4e5d63;
+  color: #ffffff;
 }
 
 .button__catalog.clicked {
-  background-color: #4e5d63; /* фон при наведении */
+  background-color: #4e5d63;
   color: #ffffff;
 }
 
@@ -322,7 +322,7 @@ main {
   width: 20px;
   background-color: white;
   border: 2px solid #7fa5a3;
-  border-radius: 5px; /* Закругление углов */
+  border-radius: 5px;
   transition: 0.2s;
 }
 
@@ -336,7 +336,7 @@ main {
   top: 3px;
   left: 3px;
   background: white;
-  border-radius: 4px; /* закругление внутреннего квадратика */
+  border-radius: 4px;
 }
 
 .radio-wrapper:hover .radio-mark {
@@ -798,7 +798,6 @@ footer {
 .block-input {
   display: flex;
   flex-direction: column;
-  /* gap: 30px; */
 }
 
 .text-login {
@@ -1251,7 +1250,6 @@ footer {
   height: 300px;
   display: flex;
   gap: 50px;
-  /* align-items: center; */
   margin-bottom: 50px;
 }
 
@@ -1460,7 +1458,6 @@ footer {
   padding: 20px 30px;
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(94, 136, 133, 0.5);
-  /* 0 0 5px rgba(94, 136, 133, 0.5); */
   font-size: 16px;
   color: #f0f0f0;
   max-width: 400px;
@@ -1623,7 +1620,7 @@ footer {
 }
 
 .confirm-yes {
-  background-color: #e74c3c;
+  background-color: #7fa5a3;
   color: white;
 }
 
@@ -1788,21 +1785,19 @@ footer {
   margin-top: 20px;
 }
 
-/* Затемнение фона */
 .modal-confirm-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* полупрозрачный чёрный фон */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-/* Сама модалка */
 .modal-confirm {
   background-color: #fff;
   padding: 24px 32px;
@@ -1814,14 +1809,12 @@ footer {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Текст в модалке */
 .modal-text {
   font-size: 18px;
   margin-bottom: 24px;
   color: #333;
 }
 
-/* Кнопки */
 .modal-buttons {
   display: flex;
   justify-content: center;
@@ -1839,12 +1832,12 @@ footer {
 }
 
 .btn-confirm {
-  background-color: #e53935;
+  background-color: #7fa5a3;
   color: white;
 }
 
 .btn-confirm:hover {
-  background-color: #c62828;
+  background-color: #5e8885;
 }
 
 .btn-cancel {
@@ -1856,7 +1849,6 @@ footer {
   background-color: #bdbdbd;
 }
 
-/* Анимация */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -1868,7 +1860,7 @@ footer {
   }
 }
 
-.profile-btn{
+.profile-btn {
   width: 100%;
   background-color: #ffffff;
   border-radius: 15px;
@@ -1878,7 +1870,7 @@ footer {
   gap: 50px;
 }
 
-.btn-admin{
+.btn-admin {
   width: 250px;
   height: 45px;
   background-color: #7fa5a3;
@@ -2007,4 +1999,172 @@ footer {
   font-size: 18px;
   color: #fff;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.section-orders {
+  margin-top: 30px;
+}
+
+.text-orders-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.order-card {
+  border: 2px solid #7fa5a3;
+  background-color: #f0f7f6;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(79, 93, 99, 0.1);
+}
+
+.order-header p,
+.order-status,
+.order-books {
+  margin: 8px 0;
+  color: #1a1a1a;
+  font-size: 16px;
+}
+
+.order-books ul {
+  padding-left: 20px;
+}
+
+.order-books li {
+  margin-bottom: 4px;
+}
+
+.order-status select {
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #1a1a1a;
+  border: 0px;
+  padding-left: 20px;
+  background-color: #ffffff;
+  outline: none;
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px 16px;
+}
+
+.order-status select:focus {
+  border-color: #7fa5a3;
+  outline: none;
+  box-shadow: 0 0 5px rgba(94, 136, 133, 0.5);
+  transition: all 0.1s;
+}
+
+.no-orders {
+  font-size: 18px;
+  color: #4e5d63;
+  text-align: center;
+}
+
+.confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.confirm-modal.hidden {
+  display: none;
+}
+
+.confirm-modal-content {
+  background-color: white;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: popUp 0.4s ease;
+}
+
+.confirm-text {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #4e5d63;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.confirm-yes {
+  background-color: #7fa5a3;
+  color: white;
+}
+
+.confirm-no {
+  background-color: #ccc;
+  color: black;
+}
+
+.confirm-yes:hover {
+  background-color: #6b9491;
+}
+
+.confirm-no:hover {
+  background-color: #b3b3b3;
+}
+
+@keyframes popUp {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.update-status-btn {
+  background-color: #7fa5a3;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-left: 10px;
+}
+
+.update-status-btn:hover {
+  background-color: #5e8885;
+}
+
+.update-status-btn:focus {
+  outline: none;
+}
+
+.update-status-btn:active {
+  background-color: #5e8885;
 }

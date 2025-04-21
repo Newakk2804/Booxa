@@ -16,6 +16,7 @@
   <script type="module" defer src="/js/update_book.js"></script>
   <script type="module" defer src="/js/delete_book.js"></script>
   <script type="module" defer src="/js/new_book.js"></script>
+  <script type="module" defer src="/js/change_status_order.js"></script>
   <title>
     Booxa - <%= locals.title %>
   </title>
@@ -52,6 +53,15 @@
             <div class="modal-buttons">
               <button id="confirm-delete" class="btn-confirm">Да</button>
               <button id="cancel-delete" class="btn-cancel">Нет</button>
+            </div>
+          </div>
+        </div>
+        <div class="confirm-modal hidden" id="status-modal">
+          <div class="confirm-modal-content">
+            <p class="confirm-text">Вы уверены, что хотите изменить статус заказа?</p>
+            <div class="confirm-buttons">
+              <button id="confirm-status-btn" class="btn confirm-yes">Да</button>
+              <button id="cancel-status-btn" class="btn confirm-no">Нет</button>
             </div>
           </div>
         </div>

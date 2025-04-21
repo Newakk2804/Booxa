@@ -76,7 +76,7 @@ router.post('/add-new-book', upload.single('imageUrl'), async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Ошибка при добавлении книги' });
   }
-})
+});
 
 router.get('/detail-book/:id', async (req, res) => {
   const idBook = req.params.id;

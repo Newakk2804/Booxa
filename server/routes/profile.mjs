@@ -103,6 +103,58 @@ router.post('/profile/photo', upload.single('imageUrl'), async (req, res) => {
   }
 });
 
+router.get('/all-orders', async (req, res) => {
+  try {
+    const orders = await Order.find().populate('owner', 'mail').populate('items');
+
+    const locals = {
+      title: 'Все заказы',
+      orders,
+    };
+
+    res.render('all_orders', locals);
+  } catch (err) {
+    console.error('Ошибка при получении заказов:', err);
+    res.status(500).send('Ошибка сервера');
+  }
+});
+
+router.patch('/update-order-status/:id', async (req, res) => {
+  let { status } = req.body;  // Извлекаем статус из тела запроса
+  const { id } = req.params;  // Получаем ID заказа из параметра URL
+
+  // Проверяем, передан ли статус и является ли он строкой
+  if (!status || typeof status !== 'string') {
+    return res.status(400).json({ message: 'Статус должен быть строкой и не может быть пустым' });
+  }
+
+  // Обрезаем пробелы в статусе
+  status = status.trim();
+
+  const validStatuses = ['В обработке', 'Собирается на складе', 'В пути до получателя', 'Доставлен', 'Отменен'];
+  
+  // Проверяем, существует ли статус в списке допустимых
+  if (!validStatuses.includes(status)) {
+    console.log(`Получен некорректный статус: "${status}"`);  // Для отладки
+    return res.status(400).json({ message: 'Неверный статус' });
+  }
+
+  try {
+    const order = await Order.findById(id);  // Найдите заказ по ID
+    if (!order) {
+      return res.status(404).json({ message: 'Заказ не найден' });
+    }
+
+    order.status = status;  // Обновляем статус
+    await order.save();
+
+    res.status(200).json({ message: 'Статус заказа обновлён успешно' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Произошла ошибка при обновлении статуса' });
+  }
+});
+
 router.get('/profile/:id/books', async (req, res) => {
   const orderId = req.params.id;
   const order = await Order.findById(orderId).populate('items');

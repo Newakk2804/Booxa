@@ -1,0 +1,47 @@
+<main>
+  <div class="container">
+    <section class="section-orders">
+      <div class="block-title">
+        <p class="text-orders-title">Список заказов</p>
+      </div>
+
+      <% if (orders.length === 0) { %>
+        <p class="no-orders">Заказы отсутствуют.</p>
+      <% } else { %>
+        <% orders.forEach(order => { %>
+          <div class="order-card">
+            <div class="order-header">
+              <p><strong>Заказ №:</strong> <%= order._id %></p>
+              <p><strong>Пользователь:</strong> <%= order.owner?.mail || "Гость" %></p>
+              <p><strong>Сумма:</strong> <%= order.price %> BYN</p>
+              <p><strong>Дата:</strong> <%= new Date(order.createdAt).toLocaleString() %></p>
+            </div>
+
+            <div class="order-status">
+              <form id="order-status-form-<%= order._id %>" data-id="<%= order._id %>">
+                <label for="status-<%= order._id %>"><strong>Статус:</strong></label>
+                <select class="order-status" data-id="<%= order._id %>">
+                  <option value="В обработке" <%= order.status === 'В обработке' ? 'selected' : '' %>>В обработке</option>
+                  <option value="Собирается на складе" <%= order.status === 'Собирается на складе' ? 'selected' : '' %>>Собирается на складе</option>
+                  <option value="В пути до получателя" <%= order.status === 'В пути до получателя' ? 'selected' : '' %>>В пути до получателя</option>
+                  <option value="Доставлен" <%= order.status === 'Доставлен' ? 'selected' : '' %>>Доставлен</option>
+                  <option value="Отменен" <%= order.status === 'Отменен' ? 'selected' : '' %>>Отменен</option>
+                </select>
+                <button type="button" class="update-status-btn">изменить статус</button>
+              </form>
+            </div>
+
+            <div class="order-books">
+              <p class="book-list-title">Книги в заказе:</p>
+              <ul>
+                <% order.items.forEach(item => { %>
+                  <li><strong><%= item.title %></strong> — <%= item.price %> BYN</li>
+                <% }); %>
+              </ul>
+            </div>
+          </div>
+        <% }); %>
+      <% } %>
+    </section>
+  </div>
+</main>

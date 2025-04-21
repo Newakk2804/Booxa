@@ -14,7 +14,7 @@
                 <label class="file-upload-label" for="imageUrl">выбрать фото</label>
                 <input type="file" name="imageUrl" id="imageUrl" accept="image/*" required />
               </div>
-              <button type="submit" class="button-upload" >загрузить</button>
+              <button type="submit" class="button-upload">загрузить</button>
             </form>
           </div>
           <div class="profile-description">
@@ -41,30 +41,27 @@
             <p class="text-profile-order-title">Заказы</p>
           </div>
           <div class="profile-list">
-            <% if (orders.length !== 0) { %>
-              <% orders.forEach(order => { %>
-                <div class="profile-item">
-                <p class="text-profile-order">дата: <%= order.formattedDate %></p>
-                <p class="text-profile-order">количество товаров: <%= order.items.length %></p>
-                <p class="text-profile-order">стоимость: <%= order.price %> BYN</p>
-                  <p class="text-profile-order">статус: <%= order.status %></p>
+            <% if (orders.length !==0) { %>
+              <% orders.forEach(order=> { %>
+                <div class="profile-item" data-order-id="<%= order._id %>">
+                  <p class="text-profile-order">дата: <%= order.formattedDate %>
+                  </p>
+                  <p class="text-profile-order">количество товаров: <%= order.items.length %>
+                  </p>
+                  <p class="text-profile-order">стоимость: <%= order.price %> BYN</p>
+                  <p class="text-profile-order">статус: <%= order.status %>
+                  </p>
+                  <button class="open-order-details" data-id="<%= order._id %>"><img src="/img/eye.svg" alt=""></button>
+                  <button type="button"
+                    class="button-profile-delete<%= order.status !== 'В обработке' ? ' disabled' : '' %>" <% if
+                    (order.status !=='В обработке' ) { %> disabled title="Удаление доступно только на стадии 'В обработке'" <% } %>>
+                      <img src="img/delete.svg" alt="">
+                  </button>
                 </div>
-              <% }) %>
-            <% } else { %>
-              <p class="empty-orders">нет заказов</p>
-              <% } %>
-            <!-- <div class="profile-item">
-              <p class="text-profile-order">дата: 01.01.2020</p>
-              <p class="text-profile-order">количество товаров: 2</p>
-              <p class="text-profile-order">стоимость: 200 BYN</p>
-              <p class="text-profile-order">статус: доставлен</p>
-            </div>
-            <div class="profile-item">
-              <p class="text-profile-order">дата: 01.01.2020</p>
-              <p class="text-profile-order">количество товаров: 2</p>
-              <p class="text-profile-order">стоимость: 200 BYN</p>
-              <p class="text-profile-order">статус: доставлен</p>
-            </div> -->
+                <% }) %>
+                  <% } else { %>
+                    <p class="empty-orders">нет заказов</p>
+                    <% } %>
           </div>
         </div>
       </div>

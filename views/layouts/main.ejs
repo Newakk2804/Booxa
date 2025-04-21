@@ -10,6 +10,8 @@
   <script type="module" defer src="/js/add_item_and_change_count_basket.js"></script>
   <script type="text/javascript" defer src="/js/delete_item_in_basket.js"></script>
   <script type="module" defer src="/js/add_order.js"></script>
+  <script type="module" defer src="/js/orderModal.js"></script>
+  <script type="module" defer src="/js/delete_order.js"></script>
   <title>
     Booxa - <%= locals.title %>
   </title>
@@ -19,11 +21,27 @@
   <%- include('../partials/header.ejs'); %>
     <%- body %>
       <%- include('../partials/footer.ejs'); %>
-      <div id="toast-backdrop" class="toast-backdrop hidden">
-        <div id="toast" class="toast">
-          <span id="toast-message"></span>
+        <div id="toast-backdrop" class="toast-backdrop hidden">
+          <div id="toast" class="toast">
+            <span id="toast-message"></span>
+          </div>
         </div>
-      </div>
+        <div id="order-modal" class="modal hidden">
+          <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h3>Список книг</h3>
+            <ul id="order-books-list" class="book-list"></ul>
+          </div>
+        </div>
+        <div id="confirmModal" class="confirm-modal hidden">
+          <div class="confirm-modal-content">
+            <p class="confirm-text">Вы уверены, что хотите отменить заказ?</p>
+            <div class="confirm-buttons">
+              <button id="confirmYes" class="btn confirm-yes">Да</button>
+              <button id="confirmNo" class="btn confirm-no">Нет</button>
+            </div>
+          </div>
+        </div>
 </body>
 
 </html>

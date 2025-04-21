@@ -103,4 +103,45 @@ router.post('/profile/photo', upload.single('imageUrl'), async (req, res) => {
   }
 });
 
+router.get('/profile/:id/books', async (req, res) => {
+  const orderId = req.params.id;
+  const order = await Order.findById(orderId).populate('items');
+  if (!order) {
+    return res.status(404).json({ message: 'Заказ не найден' });
+  }
+
+  const books = order.items.map(book => ({
+    title: book.title,
+    price: book.price,
+    imageUrl: book.imageUrl,
+  }));
+
+  res.json({ books });
+});
+
+router.patch('/profile/:id/cancel', async (req, res) => {
+  const orderId = req.params.id;
+  const userId = req.session.userId;
+
+  try {
+    const order = await Order.findOne({ _id: orderId, owner: userId });
+
+    if (!order) {
+      return res.status(404).json({ message: 'Заказ не найден' });
+    }
+
+    if (order.status !== 'В обработке') {
+      return res.status(400).json({ message: 'Отменить можно только заказ в статусе "В обработке"' });
+    }
+
+    order.status = 'Отменен';
+    await order.save();
+
+    res.json({ message: 'Заказ отменён' });
+  } catch (error) {
+    console.error('Ошибка при отмене заказа:', error);
+    res.status(500).json({ message: 'Ошибка сервера' });
+  }
+});
+
 export default router;

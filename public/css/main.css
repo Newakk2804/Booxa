@@ -1134,6 +1134,32 @@ footer {
   border: 1px solid #ffffff;
 }
 
+.button-profile-delete {
+  width: 30px;
+  height: 70px;
+  border: 1px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background: #4e5d63;
+  transition: all 0.3s ease;
+}
+
+.button-profile-delete.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.button-profile-delete img {
+  width: 30px;
+  height: 30px;
+}
+
+.button-profile-delete:hover {
+  border: 1px solid #ffffff;
+}
+
 .number-item {
   font-weight: 700;
   font-size: 30px;
@@ -1359,14 +1385,14 @@ footer {
   background: #7fa5a3;
   border-radius: 15px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.8fr 1fr 0.8fr 1.5fr 0.5fr 0.2fr;
   align-items: center;
   justify-items: center;
 }
 
 .text-profile-order {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 15px;
   color: #1a1a1a;
   cursor: pointer;
 }
@@ -1451,4 +1477,160 @@ footer {
 
 .toast-backdrop.hidden {
   display: none;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: fadeInUp 0.3s ease;
+}
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.book-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.book-list-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+}
+
+.book-cover {
+  width: 60px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.book-info {
+  flex: 1;
+}
+
+.book-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.book-price {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0.3rem 0 0;
+}
+
+.open-order-details img {
+  width: 20px;
+  height: 20px;
+}
+
+.confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.confirm-modal.hidden {
+  display: none;
+}
+
+.confirm-modal-content {
+  background-color: white;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: popUp 0.4s ease;
+}
+
+.confirm-text {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.confirm-yes {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.confirm-no {
+  background-color: #ccc;
+  color: black;
+}
+
+@keyframes popUp {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

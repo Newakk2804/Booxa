@@ -15,7 +15,7 @@ const OrderSchema = mongoose.Schema(
     },
     status: {
       type: mongoose.Schema.Types.String,
-      enum: ['В обработке', 'собирается на складе', 'в пути до получателя', 'доставлен'],
+      enum: ['В обработке', 'Собирается на складе', 'В пути до получателя', 'Доставлен', 'Отменен'],
       required: true,
     },
     owner: {

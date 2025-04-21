@@ -84,7 +84,7 @@ router.post('/profile/photo', upload.single('imageUrl'), async (req, res) => {
     const user = await User.findById(userId);
     const newPath = 'uploads/' + req.file.filename;
 
-    if (user.imageUrl) {
+    if (user.imageUrl && user.imageUrl !== 'img/user.jpg') {
       const oldPath = path.join(process.cwd(), 'public', user.imageUrl);
       fs.unlink(oldPath, (err) => {
         if (err) {
@@ -110,7 +110,7 @@ router.get('/profile/:id/books', async (req, res) => {
     return res.status(404).json({ message: 'Заказ не найден' });
   }
 
-  const books = order.items.map(book => ({
+  const books = order.items.map((book) => ({
     title: book.title,
     price: book.price,
     imageUrl: book.imageUrl,
@@ -131,7 +131,9 @@ router.patch('/profile/:id/cancel', async (req, res) => {
     }
 
     if (order.status !== 'В обработке') {
-      return res.status(400).json({ message: 'Отменить можно только заказ в статусе "В обработке"' });
+      return res
+        .status(400)
+        .json({ message: 'Отменить можно только заказ в статусе "В обработке"' });
     }
 
     order.status = 'Отменен';

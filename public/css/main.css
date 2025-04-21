@@ -131,6 +131,11 @@ main {
   cursor: pointer;
 }
 
+.menu__buttons .buttons__item img {
+  width: 40px;
+  height: 40px;
+}
+
 .slide-panel-header {
   width: 200px;
   height: 140px;

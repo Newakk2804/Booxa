@@ -15,6 +15,7 @@ import basketRouter from './server/routes/basket.mjs';
 import profileRouter from './server/routes/profile.mjs';
 import connectDB from './server/config/db.mjs';
 import multer from 'multer';
+import User from './server/models/Users.mjs';
 
 dotenv.config();
 
@@ -48,6 +49,15 @@ app.use(
 
 app.use((req, res, next) => {
   res.locals.session = req.session;
+  next();
+});
+
+app.use(async (req, res, next) => {
+  if (req.session.userId) {
+    res.locals.user = await User.findById(req.session.userId);
+  } else {
+    res.locals.user = null;
+  }
   next();
 });
 

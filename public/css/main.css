@@ -1031,6 +1031,14 @@ footer {
   font-weight: 400;
   font-size: 18px;
   color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.text-views img {
+  width: 24px;
+  height: 24px;
 }
 
 .text-price {

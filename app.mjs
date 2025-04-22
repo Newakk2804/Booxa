@@ -1,6 +1,5 @@
 import express from 'express';
 import expressLayout from 'express-ejs-layouts';
-import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
@@ -27,7 +26,6 @@ connectDB();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(methodOverride('_method'));
 
 app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));

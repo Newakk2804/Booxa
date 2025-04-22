@@ -9,7 +9,6 @@
           </div>
           <button type="submit" class="search-btn">Поиск по словам</button>
         </form>
-
         <form action="/search" method="GET" class="search-form-params">
           <div class="search-block-content">
             <div class="search-block">
@@ -21,7 +20,6 @@
                 <% }) %>
               </select>
             </div>
-        
             <div class="search-block">
               <label for="author">Автор</label>
               <select name="author" id="author">
@@ -31,7 +29,6 @@
                 <% }) %>
               </select>
             </div>
-        
             <div class="search-block">
               <label for="publishingHouse">Издательство</label>
               <select name="publishingHouse" id="publishingHouse">
@@ -41,12 +38,10 @@
                 <% }) %>
               </select>
             </div>
-        
             <div class="search-block">
               <label for="year">Год издания</label>
               <input type="text" name="year" class="input-year" value="<%= filter.yearOfPublication || '' %>" placeholder="Введите год">
             </div>
-        
             <div class="search-block">
               <label for="language">Язык</label>
               <select name="language" id="language">
@@ -57,7 +52,6 @@
               </select>
             </div>
           </div>
-
           <div class="block-search-btn">
             <button type="submit" class="search-btn-params">Поиск по параметрам</button>
           </div>
@@ -65,8 +59,6 @@
       </div>
     </section>
   </div>
-
-  <!-- Популярные книги -->
   <section class="section-popular-books">
     <div class="container">
       <div class="pop-books-content">
@@ -85,8 +77,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Список книг -->
   <div class="container">
     <section class="section-list-card">
       <div class="list-card" id="list-card">
@@ -131,8 +121,6 @@
       </div>
     </section>
   </div>
-
-  <!-- Пагинация -->
   <div class="container">
     <section class="section-pagination">
       <div class="pagination">

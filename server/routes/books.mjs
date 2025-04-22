@@ -71,7 +71,6 @@ router.get('/', async (req, res) => {
       currentPage: page,
       totalPages,
       pagination,
-      user: req.user,
     });
   } catch (error) {
     console.error(error);

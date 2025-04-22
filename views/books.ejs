@@ -155,7 +155,8 @@
     <section class="section-pagination">
       <div class="pagination">
         <% if (currentPage> 1) { %>
-          <a href="/?page=<%= currentPage - 1 %>" class="arrow-left">
+          <a href="<%= value ? `/search-by-search-field?value=${value}&page=${currentPage - 1}` : `/?page=${currentPage - 1}` %>"
+            class="arrow-left">
             <img src="/img/arrow-left.svg" alt="назад">
           </a>
           <% } %>
@@ -164,7 +165,7 @@
                 <% if (p==='...' ) { %>
                   <span class="text-pagination-ellipses">...</span>
                   <% } else { %>
-                    <a href="/?page=<%= p %>">
+                    <a href="<%= value ? `/search-by-search-field?value=${value}&page=${p}` : `/?page=${p}` %>">
                       <p class="text-pagination <%= p === currentPage ? 'active' : '' %>">
                         <%= p %>
                       </p>
@@ -173,7 +174,8 @@
                       <% }) %>
             </div>
             <% if (currentPage < totalPages) { %>
-              <a href="/?page=<%= currentPage + 1 %>" class="arrow-right">
+              <a href="<%= value ? `/search-by-search-field?value=${value}&page=${currentPage + 1}` : `/?page=${currentPage + 1}` %>"
+                class="arrow-right">
                 <img src="/img/arrow-right.svg" alt="вперёд">
               </a>
               <% } %>

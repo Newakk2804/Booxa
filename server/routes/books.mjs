@@ -6,14 +6,41 @@ import fs from 'fs';
 
 const router = Router();
 
+function generatePagination(currentPage, totalPages) {
+  const delta = 2;
+  const range = [];
+  const rangeWithDots = [];
+  let l;
+
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+      range.push(i);
+    }
+  }
+
+  for (let i of range) {
+    if (l) {
+      if (i - l === 2) {
+        rangeWithDots.push(l + 1);
+      } else if (i - l !== 1) {
+        rangeWithDots.push('...');
+      }
+    }
+    rangeWithDots.push(i);
+    l = i;
+  }
+
+  return rangeWithDots;
+}
+
 router.get('/', async (req, res) => {
-  const locals = { title: 'Главная' };
-
-  const page = parseInt(req.query.page) || 1;
-  const limit = 5;
-  const skip = (page - 1) * limit;
-
   try {
+    const locals = { title: 'Главная' };
+    const page = parseInt(req.query.page) || 1;
+    const limit = 5;
+    const skip = (page - 1) * limit;
+    const value = req.query.value || ''; // <-- вот здесь задаём значение по умолчанию
+
     const [
       allBooks,
       totalBooks,
@@ -35,29 +62,7 @@ router.get('/', async (req, res) => {
     ]);
 
     const totalPages = Math.ceil(totalBooks / limit);
-
-    const pagination = [];
-
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) {
-        pagination.push(i);
-      }
-    } else {
-      pagination.push(1);
-
-      if (page > 3) pagination.push('...');
-
-      const start = Math.max(2, page - 1);
-      const end = Math.min(totalPages - 1, page + 1);
-
-      for (let i = start; i <= end; i++) {
-        pagination.push(i);
-      }
-
-      if (page < totalPages - 2) pagination.push('...');
-
-      pagination.push(totalPages);
-    }
+    const pagination = generatePagination(page, totalPages);
 
     res.render('books', {
       locals,
@@ -71,11 +76,12 @@ router.get('/', async (req, res) => {
       currentPage: page,
       totalPages,
       pagination,
-      notFound: false,
+      notFound: allBooks.length === 0,
+      value, // <-- передаём в шаблон
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Ошибка сервера');
+    res.status(500).render('error', { message: 'Ошибка при загрузке главной страницы' });
   }
 });
 
@@ -264,8 +270,8 @@ router.get('/search-by-search-field', async (req, res) => {
     const { value, page = 1 } = req.query;
     const limit = 5;
     const currentPage = parseInt(page, 10);
+    const skip = (currentPage - 1) * limit;
 
-    // Поисковый запрос
     const query = {
       $or: [
         { title: { $regex: value, $options: 'i' } },
@@ -273,10 +279,9 @@ router.get('/search-by-search-field', async (req, res) => {
       ],
     };
 
-    // Всего найдено
     const totalBooks = await Book.countDocuments(query);
     const totalPages = Math.ceil(totalBooks / limit);
-    const skip = (currentPage - 1) * limit;
+    const pagination = generatePagination(currentPage, totalPages);
 
     const allBooks = await Book.find(query).skip(skip).limit(limit);
 
@@ -288,6 +293,7 @@ router.get('/search-by-search-field', async (req, res) => {
         Book.distinct('yearOfPublication'),
         Book.distinct('language'),
       ]);
+
     const popularBooks = await Book.find().sort({ numberOfViews: -1 }).limit(3);
 
     const locals = {
@@ -306,7 +312,8 @@ router.get('/search-by-search-field', async (req, res) => {
       notFound: allBooks.length === 0,
       currentPage,
       totalPages,
-      pagination: Array.from({ length: totalPages }, (_, i) => i + 1),
+      pagination,
+      value, // <==== обязательно передаём!
     });
   } catch (error) {
     console.error(error);

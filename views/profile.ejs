@@ -34,6 +34,9 @@
               <p class="text-profile">Адрес проживания: </p>
               <input id="input-address" type="text" value="<%= user.address %>" placeholder="Введите свой адрес...">
             </div>
+            <div class="block-text-input">
+              <a href="/profile/change-password" class="btn-pas">Изменить пароль</a>
+            </div>
           </div>
         </div>
         <% if (user && user.role==='user') { %>

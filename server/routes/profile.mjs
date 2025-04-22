@@ -2,6 +2,7 @@ import { Router } from 'express';
 import User from '../models/Users.mjs';
 import Order from '../models/Orders.mjs';
 import { authMiddleware } from '../utils/middlewares.mjs';
+import { checkPassword, hashPassword } from '../utils/helpers.mjs';
 import upload from '../utils/upload.mjs';
 import moment from 'moment';
 import path from 'path';
@@ -103,6 +104,72 @@ router.post('/profile/photo', upload.single('imageUrl'), async (req, res) => {
   }
 });
 
+router.get('/profile/check-user', (req, res) => {
+  const locals = {
+    title: 'Проверка пользователя',
+  };
+
+  res.render('check_user', locals);
+});
+
+router.post('/profile/check-user', async (req, res) => {
+  const { checkUser } = req.body;
+
+  try {
+    const findUser = await User.findOne({ mail: checkUser });
+
+    if (!findUser) {
+      return res.status(500).send({ message: 'Такого пользователя не существует' });
+    }
+
+    req.session.TempUserId = findUser._id;
+
+    res.redirect('/profile/change-password');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Ошибка во время проверки пользователя' });
+  }
+});
+
+router.get('/profile/change-password', (req, res) => {
+  const locals = {
+    title: 'Изменение пароля',
+  };
+
+  res.render('change_password', locals);
+});
+
+router.post('/profile/change-password', async (req, res) => {
+  const { oldPassword, newPassword, againPassword } = req.body;
+  const userId = req.session.TempUserId || req.session.userId;
+
+  try {
+    const findUser = await User.findById(userId);
+
+    const checkOldPassword = checkPassword(oldPassword, findUser.password);
+
+    if (!checkOldPassword) {
+      return res.status(500).send({ message: 'Старый пароль не верен' });
+    }
+
+    if (newPassword !== againPassword) {
+      return res.status(500).send({ message: 'пароли не совпадают' });
+    }
+
+    const hashedPassword = hashPassword(newPassword);
+
+    const updateUser = await User.updateOne(
+      { _id: userId },
+      { $set: { password: hashedPassword } }
+    );
+
+    res.redirect('/profile');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Произошла ошибка во время изменения пароля' });
+  }
+});
+
 router.get('/all-orders', async (req, res) => {
   try {
     const orders = await Order.find().populate('owner', 'mail').populate('items');
@@ -129,8 +196,14 @@ router.patch('/update-order-status/:id', async (req, res) => {
 
   status = status.trim();
 
-  const validStatuses = ['В обработке', 'Собирается на складе', 'В пути до получателя', 'Доставлен', 'Отменен'];
-  
+  const validStatuses = [
+    'В обработке',
+    'Собирается на складе',
+    'В пути до получателя',
+    'Доставлен',
+    'Отменен',
+  ];
+
   if (!validStatuses.includes(status)) {
     console.log(`Получен некорректный статус: "${status}"`);
     return res.status(400).json({ message: 'Неверный статус' });

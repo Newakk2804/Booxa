@@ -15,7 +15,6 @@ router.post('/register', async (req, res) => {
   const { mail, password, secondPassword } = req.body;
 
   const CheckUser = await User.findOne({ mail });
-  if (CheckUser) return res.send(CheckUser);
 
   if (password !== secondPassword) throw new Error('passwords do not match');
 

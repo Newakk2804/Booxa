@@ -71,6 +71,7 @@ router.get('/', async (req, res) => {
       currentPage: page,
       totalPages,
       pagination,
+      notFound: false,
     });
   } catch (error) {
     console.error(error);
@@ -260,18 +261,56 @@ router.get('/search-by-params', async (req, res) => {
 
 router.get('/search-by-search-field', async (req, res) => {
   try {
-    const { value } = req.query;
+    const { value, page = 1 } = req.query;
+    const limit = 5;
+    const currentPage = parseInt(page, 10);
 
-    const books = await Book.find({
+    // Поисковый запрос
+    const query = {
       $or: [
         { title: { $regex: value, $options: 'i' } },
         { description: { $regex: value, $options: 'i' } },
       ],
+    };
+
+    // Всего найдено
+    const totalBooks = await Book.countDocuments(query);
+    const totalPages = Math.ceil(totalBooks / limit);
+    const skip = (currentPage - 1) * limit;
+
+    const allBooks = await Book.find(query).skip(skip).limit(limit);
+
+    const [allGenres, allAuthors, allPublishingHouse, allYearOfPublication, allLanguages] =
+      await Promise.all([
+        Book.distinct('genres'),
+        Book.distinct('author'),
+        Book.distinct('publishingHouse'),
+        Book.distinct('yearOfPublication'),
+        Book.distinct('language'),
+      ]);
+    const popularBooks = await Book.find().sort({ numberOfViews: -1 }).limit(3);
+
+    const locals = {
+      title: `Результаты поиска по "${value}"`,
+    };
+
+    res.render('books', {
+      locals,
+      allBooks,
+      allGenres,
+      allAuthors,
+      allPublishingHouse,
+      allYearOfPublication,
+      allLanguages,
+      popularBooks,
+      notFound: allBooks.length === 0,
+      currentPage,
+      totalPages,
+      pagination: Array.from({ length: totalPages }, (_, i) => i + 1),
     });
-    res.json(books);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Ошибка при поиске книг' });
+    res.status(500).render('error', { message: 'Ошибка при поиске книг' });
   }
 });
 

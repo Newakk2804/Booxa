@@ -1,11 +1,11 @@
 <script type="text/javascript" defer src="/js/search_params.js"></script>
-<script type="text/javascript" defer src="/js/search_input.js"></script>
 <main>
   <div class="container">
     <section class="section-search" id="block-content">
-      <div class="block-search">
-        <input type="text" placeholder="Поиск" id="search-field">
-      </div>
+      <form action="/search-by-search-field" method="GET" class="block-search">
+        <input type="text" placeholder="Поиск" name="value" id="search-field" />
+        <button type="submit" class="btn-search-input">Найти</button>
+      </form>
       <div class="block-catalog" id="block">
         <p class="text underline">Каталог</p>
         <div class="catalog__buttons">
@@ -96,81 +96,87 @@
   <div class="container">
     <section class="section-list-card">
       <div class="list-card" id="list-card">
-        <% allBooks.forEach(book=> { %>
-          <div class="card">
-            <div class="card-img">
-              <img src="<%= book.imageUrl %>" alt="">
-            </div>
-            <div class="card-content">
-              <div class="card-content-text">
-                <div class="block-text-title">
-                  <p class="text-card-title">
-                    <%= book.title %>
-                  </p>
+        <% if (notFound) { %>
+          <p class="text-not-found">Ничего не найдено по вашему запросу.</p>
+          <% } else { %>
+            <% allBooks.forEach(book=> { %>
+              <div class="card">
+                <div class="card-img">
+                  <img src="<%= book.imageUrl %>" alt="">
                 </div>
-                <p class="text-card-description">
-                  <%= book.description.length> 205 ? book.description.slice(0, 205) + '...' : book.description %>
-                </p>
-                <div class="block-text-card">
-                  <p class="text-card">автор: <%= book.author %>
-                  </p>
-                  <p class="text-card">жанр: <%= book.genres %>
-                  </p>
-                  <p class="text-card">издательство: <%= book.publishingHouse %>
-                  </p>
-                  <p class="text-card">год издания: <%= book.yearOfPublication %>
-                  </p>
-                  <p class="text-card">язык книги: <%= book.language %>
-                  </p>
-                  <p class="text-card">количество страниц: <%= book.numberOfBooks %>
-                  </p>
-                  <p class="text-card"><span>цена: <%= book.price %> BYN</span></p>
-                </div>
-              </div>
-              <div class="card-content-button">
-                <% if (user && user.role==='admin' ) { %>
-                  <a href="/edit-book/<%= book._id %>" class="button-card edit-item">
-                    редактировать
-                  </a>
-                  <% } else { %>
-                    <a class="button-card add-item-basket" data-id="<%= book._id %>">
-                      в корзину
-                    </a>
-                    <% }%>
-                      <a href="/detail-book/<%= book._id %>" class="button-card">
-                        подробнее
+                <div class="card-content">
+                  <div class="card-content-text">
+                    <div class="block-text-title">
+                      <p class="text-card-title">
+                        <%= book.title %>
+                      </p>
+                    </div>
+                    <p class="text-card-description">
+                      <%= book.description.length> 205 ? book.description.slice(0, 205) + '...' : book.description %>
+                    </p>
+                    <div class="block-text-card">
+                      <p class="text-card">автор: <%= book.author %>
+                      </p>
+                      <p class="text-card">жанр: <%= book.genres %>
+                      </p>
+                      <p class="text-card">издательство: <%= book.publishingHouse %>
+                      </p>
+                      <p class="text-card">год издания: <%= book.yearOfPublication %>
+                      </p>
+                      <p class="text-card">язык книги: <%= book.language %>
+                      </p>
+                      <p class="text-card">количество страниц: <%= book.numberOfBooks %>
+                      </p>
+                      <p class="text-card"><span>цена: <%= book.price %> BYN</span></p>
+                    </div>
+                  </div>
+                  <div class="card-content-button">
+                    <% if (user && user.role==='admin' ) { %>
+                      <a href="/edit-book/<%= book._id %>" class="button-card edit-item">
+                        редактировать
                       </a>
+                      <% } else { %>
+                        <a class="button-card add-item-basket" data-id="<%= book._id %>">
+                          в корзину
+                        </a>
+                        <% }%>
+                          <a href="/detail-book/<%= book._id %>" class="button-card">
+                            подробнее
+                          </a>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <% }) %>
+              <% }) %>
+                <% } %>
       </div>
     </section>
   </div>
   <div class="container">
     <section class="section-pagination">
       <div class="pagination">
-        <% if (currentPage > 1) { %>
+        <% if (currentPage> 1) { %>
           <a href="/?page=<%= currentPage - 1 %>" class="arrow-left">
             <img src="/img/arrow-left.svg" alt="назад">
           </a>
-        <% } %>
-        <div class="pagination-page">
-          <% pagination.forEach(p => { %>
-            <% if (p === '...') { %>
-              <span class="text-pagination-ellipses">...</span>
-            <% } else { %>
-              <a href="/?page=<%= p %>">
-                <p class="text-pagination <%= p === currentPage ? 'active' : '' %>"><%= p %></p>
+          <% } %>
+            <div class="pagination-page">
+              <% pagination.forEach(p=> { %>
+                <% if (p==='...' ) { %>
+                  <span class="text-pagination-ellipses">...</span>
+                  <% } else { %>
+                    <a href="/?page=<%= p %>">
+                      <p class="text-pagination <%= p === currentPage ? 'active' : '' %>">
+                        <%= p %>
+                      </p>
+                    </a>
+                    <% } %>
+                      <% }) %>
+            </div>
+            <% if (currentPage < totalPages) { %>
+              <a href="/?page=<%= currentPage + 1 %>" class="arrow-right">
+                <img src="/img/arrow-right.svg" alt="вперёд">
               </a>
-            <% } %>
-          <% }) %>
-        </div>
-        <% if (currentPage < totalPages) { %>
-          <a href="/?page=<%= currentPage + 1 %>" class="arrow-right">
-            <img src="/img/arrow-right.svg" alt="вперёд">
-          </a>
-        <% } %>
+              <% } %>
       </div>
     </section>
   </div>

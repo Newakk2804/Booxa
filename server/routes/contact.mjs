@@ -1,12 +1,8 @@
 import { Router } from 'express';
+import { displayPageContact } from '../controllers/contactController.mjs';
 
 const router = Router();
 
-router.get('/contact', (req, res) => {
-  const locals = {
-    title: 'Контакты',
-  };
-  res.render('contact', locals);
-});
+router.get('/contact', displayPageContact);
 
 export default router;

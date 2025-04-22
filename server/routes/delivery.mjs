@@ -1,12 +1,8 @@
 import { Router } from 'express';
+import { displayPageDelivery } from '../controllers/deliveryContact.mjs';
 
 const router = Router();
 
-router.get('/delivery', (req, res) => {
-  const locals = {
-    title: 'Доставка',
-  };
-  res.render('delivery', locals);
-});
+router.get('/delivery', displayPageDelivery);
 
 export default router;

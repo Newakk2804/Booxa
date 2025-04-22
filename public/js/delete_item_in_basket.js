@@ -41,12 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const itemElement = document.querySelector(`.basket-item[data-id="${bookId}"]`);
           if (itemElement) itemElement.remove();
 
-          const nextItemElement = document.querySelector(`.basket-item[data-id="${bookId}"]`) || undefined;
-
-          if(nextItemElement === undefined) {
-            basketList.innerHTML = '<p class="empty-basket">корзина пуста</p>';
-          }
-
           showToast(data.message, 2000);
 
           updateBasketCount();

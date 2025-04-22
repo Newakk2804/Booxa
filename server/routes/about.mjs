@@ -1,12 +1,8 @@
 import { Router } from 'express';
+import { displayPageAbout } from '../controllers/aboutController.mjs';
 
 const router = Router();
 
-router.get('/about', (req, res) => {
-  const locals = {
-    title: 'О нас',
-  };
-  res.render('about', locals);
-});
+router.get('/about', displayPageAbout);
 
 export default router;

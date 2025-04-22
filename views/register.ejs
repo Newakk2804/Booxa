@@ -5,13 +5,21 @@
         <p class="text-register-title">Регистрация</p>
         <div class="block-input">
           <form action="/register" method="POST" class="block-input">
-            <input type="text" placeholder="почта" class="input-register" name="mail">
+            <input type="text" placeholder="почта" class="input-register" name="mail" value="<%= oldInput?.mail || '' %>">
+            <% if (errors?.mail) { %>
+              <p class="error-message"><%= errors.mail.msg %></p>
+            <% } %>
             <input type="password" placeholder="пароль" class="input-register" name="password">
+            <% if (errors?.password) { %>
+              <p class="error-message"><%= errors.password.msg %></p>
+            <% } %>
             <input type="password" placeholder="повторить пароль" class="input-register" name="secondPassword">
+            <% if (errors?.secondPassword) { %>
+              <p class="error-message"><%= errors.secondPassword.msg %></p>
+            <% } %>
             <input type="submit" class="button-register" value="Зарегистрироваться">
           </form>
         </div>
-        <!-- <button class="button-register">Зарегистрироваться</button> -->
         <p class="text-register">Есть аккаунт? <span><a href="login">Войдите</a></span></p>
       </div>
     </div>

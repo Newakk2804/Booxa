@@ -2,183 +2,164 @@
 <main>
   <div class="container">
     <section class="section-search" id="block-content">
-      <form action="/search-by-search-field" method="GET" class="block-search">
-        <input type="text" placeholder="Поиск" name="value" id="search-field" />
-        <button type="submit" class="btn-search-input">Найти</button>
-      </form>
-      <div class="block-catalog" id="block">
-        <p class="text underline">Каталог</p>
-        <div class="catalog__buttons">
-          <button type="button" class="button__catalog" id="button_genre">жанры</button>
-          <button type="button" class="button__catalog" id="button_author">авторы</button>
-          <button type="button" class="button__catalog" id="button_publishing">издательства</button>
-          <button type="button" class="button__catalog" id="button_yearOfPublication">год издания</button>
-          <button type="button" class="button__catalog" id="button_language">язык книги</button>
-        </div>
-        <div class="block-catalog-hidden" id="block-hidden-genre">
-          <div class="radio-group">
-            <% allGenres.forEach(genre=> { %>
-              <label class="radio-wrapper">
-                <input type="radio" name="genre" value="<%= genre %>" onclick="toggleRadio(this)">
-                <span class="radio-mark"></span>
-                <%= genre %>
-              </label>
-              <% }) %>
+      <div class="search-container">
+        <form action="/search" method="GET" class="search-form">
+          <div class="search-block">
+            <input type="text" name="value" class="input-search" id="value" placeholder="Введите текст для поиска"
+              value="<%= value %>">
           </div>
-        </div>
-        <div class="block-catalog-hidden" id="block-hidden-author">
-          <div class="radio-group">
-            <% allAuthors.forEach(author=> { %>
-              <label class="radio-wrapper">
-                <input type="radio" name="author" value="<%= author %>" onclick="toggleRadio(this)">
-                <span class="radio-mark"></span>
-                <%= author %>
-              </label>
-              <% }) %>
+          <button type="submit" class="search-btn">Поиск по словам</button>
+        </form>
+
+        <form action="/search" method="GET" class="search-form-params">
+          <div class="search-block-content">
+            <div class="search-block">
+              <label for="genre">Жанр</label>
+              <select name="genre" id="genre">
+                <option value="">Выберите жанр</option>
+                <% allGenres.forEach(genre => { %>
+                  <option value="<%= genre %>" <% if (genre === filter.genres) { %> selected <% } %>><%= genre %></option>
+                <% }) %>
+              </select>
+            </div>
+        
+            <div class="search-block">
+              <label for="author">Автор</label>
+              <select name="author" id="author">
+                <option value="">Выберите автора</option>
+                <% allAuthors.forEach(author=> { %>
+                  <option value="<%= author %>" <% if (author === filter.author) { %> selected <% } %>><%= author %></option>
+                <% }) %>
+              </select>
+            </div>
+        
+            <div class="search-block">
+              <label for="publishingHouse">Издательство</label>
+              <select name="publishingHouse" id="publishingHouse">
+                <option value="">Выберите издательство</option>
+                <% allPublishingHouse.forEach(ph=> { %>
+                  <option value="<%= ph %>" <% if (ph === filter.publishingHouse) { %> selected <% } %>><%= ph %></option>
+                <% }) %>
+              </select>
+            </div>
+        
+            <div class="search-block">
+              <label for="year">Год издания</label>
+              <input type="text" name="year" class="input-year" value="<%= filter.yearOfPublication || '' %>" placeholder="Введите год">
+            </div>
+        
+            <div class="search-block">
+              <label for="language">Язык</label>
+              <select name="language" id="language">
+                <option value="">Выберите язык</option>
+                <% allLanguages.forEach(language => { %>
+                  <option value="<%= language %>" <% if (language === filter.language) { %> selected <% } %>><%= language %></option>
+                <% }) %>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="block-catalog-hidden" id="block-hidden-publishing">
-          <div class="radio-group">
-            <% allPublishingHouse.forEach(publishingHouse=> { %>
-              <label class="radio-wrapper">
-                <input type="radio" name="publishingHouse" value="<%= publishingHouse %>" onclick="toggleRadio(this)">
-                <span class="radio-mark"></span>
-                <%= publishingHouse %>
-              </label>
-              <% }) %>
+
+          <div class="block-search-btn">
+            <button type="submit" class="search-btn-params">Поиск по параметрам</button>
           </div>
-        </div>
-        <div class="block-catalog-hidden" id="block-hidden-yearOfPublication">
-          <div class="radio-group">
-            <% allYearOfPublication.forEach(year=> { %>
-              <label class="radio-wrapper">
-                <input type="radio" name="year" value="<%= year %>" onclick="toggleRadio(this)">
-                <span class="radio-mark"></span>
-                <%= year %>
-              </label>
-              <% }) %>
-          </div>
-        </div>
-        <div class="block-catalog-hidden" id="block-hidden-language">
-          <div class="radio-group">
-            <% allLanguages.forEach(language=> { %>
-              <label class="radio-wrapper">
-                <input type="radio" name="language" value="<%= language %>" onclick="toggleRadio(this)">
-                <span class="radio-mark"></span>
-                <%= language %>
-              </label>
-              <% }) %>
-          </div>
-        </div>
+        </form>
       </div>
     </section>
   </div>
+
+  <!-- Популярные книги -->
   <section class="section-popular-books">
     <div class="container">
       <div class="pop-books-content">
         <p class="text-pop-books underline">Популярные книги по просмотрам</p>
         <div class="cards-popular-books">
-          <% popularBooks.forEach(book=> { %>
+          <% popularBooks.forEach(book => { %>
             <div class="card-pop-books">
               <img src="<%= book.imageUrl %>" alt="">
               <p class="text-pop-card">
-                <%= book.title.length> 25 ? book.title.slice(0, 25) + '...' : book.title %>
+                <%= book.title.length > 25 ? book.title.slice(0, 25) + '...' : book.title %>
               </p>
-              <a href="/detail-book/<%= book._id %>" class="button-more-details">
-                подробнее
-              </a>
+              <a href="/detail-book/<%= book._id %>" class="button-more-details">Подробнее</a>
             </div>
-            <% }) %>
+          <% }) %>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Список книг -->
   <div class="container">
     <section class="section-list-card">
       <div class="list-card" id="list-card">
         <% if (notFound) { %>
           <p class="text-not-found">Ничего не найдено по вашему запросу.</p>
-          <% } else { %>
-            <% allBooks.forEach(book=> { %>
-              <div class="card">
-                <div class="card-img">
-                  <img src="<%= book.imageUrl %>" alt="">
+        <% } else { %>
+          <% allBooks.forEach(book => { %>
+            <div class="card">
+              <div class="card-img">
+                <img src="<%= book.imageUrl %>" alt="">
+              </div>
+              <div class="card-content">
+                <div class="card-content-text">
+                  <div class="block-text-title">
+                    <p class="text-card-title"><%= book.title %></p>
+                  </div>
+                  <p class="text-card-description">
+                    <%= book.description.length > 205 ? book.description.slice(0, 205) + '...' : book.description %>
+                  </p>
+                  <div class="block-text-card">
+                    <p class="text-card">Автор: <%= book.author %></p>
+                    <p class="text-card">Жанр: <%= book.genres %></p>
+                    <p class="text-card">Издательство: <%= book.publishingHouse %></p>
+                    <p class="text-card">Год издания: <%= book.yearOfPublication %></p>
+                    <p class="text-card">Язык книги: <%= book.language %></p>
+                    <p class="text-card">Количество страниц: <%= book.numberOfBooks %></p>
+                    <p class="text-card"><span>Цена: <%= book.price %> BYN</span></p>
+                  </div>
                 </div>
-                <div class="card-content">
-                  <div class="card-content-text">
-                    <div class="block-text-title">
-                      <p class="text-card-title">
-                        <%= book.title %>
-                      </p>
-                    </div>
-                    <p class="text-card-description">
-                      <%= book.description.length> 205 ? book.description.slice(0, 205) + '...' : book.description %>
-                    </p>
-                    <div class="block-text-card">
-                      <p class="text-card">автор: <%= book.author %>
-                      </p>
-                      <p class="text-card">жанр: <%= book.genres %>
-                      </p>
-                      <p class="text-card">издательство: <%= book.publishingHouse %>
-                      </p>
-                      <p class="text-card">год издания: <%= book.yearOfPublication %>
-                      </p>
-                      <p class="text-card">язык книги: <%= book.language %>
-                      </p>
-                      <p class="text-card">количество страниц: <%= book.numberOfBooks %>
-                      </p>
-                      <p class="text-card"><span>цена: <%= book.price %> BYN</span></p>
-                    </div>
-                  </div>
-                  <div class="card-content-button">
-                    <% if (user && user.role==='admin' ) { %>
-                      <a href="/edit-book/<%= book._id %>" class="button-card edit-item">
-                        редактировать
-                      </a>
-                      <% } else { %>
-                        <a class="button-card add-item-basket" data-id="<%= book._id %>">
-                          в корзину
-                        </a>
-                        <% }%>
-                          <a href="/detail-book/<%= book._id %>" class="button-card">
-                            подробнее
-                          </a>
-                  </div>
+                <div class="card-content-button">
+                  <% if (user && user.role === 'admin') { %>
+                    <a href="/edit-book/<%= book._id %>" class="button-card edit-item">Редактировать</a>
+                  <% } else { %>
+                    <a class="button-card add-item-basket" data-id="<%= book._id %>">В корзину</a>
+                  <% } %>
+                  <a href="/detail-book/<%= book._id %>" class="button-card">Подробнее</a>
                 </div>
               </div>
-              <% }) %>
-                <% } %>
+            </div>
+          <% }) %>
+        <% } %>
       </div>
     </section>
   </div>
+
+  <!-- Пагинация -->
   <div class="container">
     <section class="section-pagination">
       <div class="pagination">
-        <% if (currentPage> 1) { %>
-          <a href="<%= value ? `/search-by-search-field?value=${value}&page=${currentPage - 1}` : `/?page=${currentPage - 1}` %>"
-            class="arrow-left">
+        <% if (currentPage > 1) { %>
+          <a href="<%= `${originalUrl.split('?')[0]}?page=${currentPage - 1}&value=${encodeURIComponent(value || '')}&genre=${encodeURIComponent(filter.genres || '')}&author=${encodeURIComponent(filter.author || '')}&publishingHouse=${encodeURIComponent(filter.publishingHouse || '')}&year=${encodeURIComponent(filter.yearOfPublication || '')}&language=${encodeURIComponent(filter.language || '')}` %>" class="arrow-left">
             <img src="/img/arrow-left.svg" alt="назад">
           </a>
-          <% } %>
-            <div class="pagination-page">
-              <% pagination.forEach(p=> { %>
-                <% if (p==='...' ) { %>
-                  <span class="text-pagination-ellipses">...</span>
-                  <% } else { %>
-                    <a href="<%= value ? `/search-by-search-field?value=${value}&page=${p}` : `/?page=${p}` %>">
-                      <p class="text-pagination <%= p === currentPage ? 'active' : '' %>">
-                        <%= p %>
-                      </p>
-                    </a>
-                    <% } %>
-                      <% }) %>
-            </div>
-            <% if (currentPage < totalPages) { %>
-              <a href="<%= value ? `/search-by-search-field?value=${value}&page=${currentPage + 1}` : `/?page=${currentPage + 1}` %>"
-                class="arrow-right">
-                <img src="/img/arrow-right.svg" alt="вперёд">
+        <% } %>
+        
+        <div class="pagination-page">
+          <% pagination.forEach(p => { %>
+            <% if (p === '...') { %>
+              <span class="text-pagination-ellipses">...</span>
+            <% } else { %>
+              <a href="<%= `${originalUrl.split('?')[0]}?page=${p}&value=${encodeURIComponent(value || '')}&genre=${encodeURIComponent(filter.genres || '')}&author=${encodeURIComponent(filter.author || '')}&publishingHouse=${encodeURIComponent(filter.publishingHouse || '')}&year=${encodeURIComponent(filter.yearOfPublication || '')}&language=${encodeURIComponent(filter.language || '')}` %>">
+                <p class="text-pagination <%= p === currentPage ? 'active' : '' %>"><%= p %></p>
               </a>
-              <% } %>
+            <% } %>
+          <% }) %>
+        </div>
+        
+        <% if (currentPage < totalPages) { %>
+          <a href="<%= `${originalUrl.split('?')[0]}?page=${currentPage + 1}&value=${encodeURIComponent(value || '')}&genre=${encodeURIComponent(filter.genres || '')}&author=${encodeURIComponent(filter.author || '')}&publishingHouse=${encodeURIComponent(filter.publishingHouse || '')}&year=${encodeURIComponent(filter.yearOfPublication || '')}&language=${encodeURIComponent(filter.language || '')}` %>" class="arrow-right">
+            <img src="/img/arrow-right.svg" alt="вперёд">
+          </a>
+        <% } %>
       </div>
     </section>
   </div>

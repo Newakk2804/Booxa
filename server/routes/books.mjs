@@ -39,7 +39,22 @@ router.get('/', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 5;
     const skip = (page - 1) * limit;
-    const value = req.query.value || ''; // <-- вот здесь задаём значение по умолчанию
+    const value = req.query.value || '';
+
+    // Получаем параметры поиска
+    const selectedGenre = req.query.genre || '';
+    const selectedAuthor = req.query.author || '';
+    const selectedPublishingHouse = req.query.publishingHouse || '';
+    const selectedYear = req.query.selectedYear || '';
+    const selectedLanguage = req.query.selectedLanguage || '';
+
+    // Создаем фильтр для поиска
+    let filter = {};
+    if (selectedGenre) filter.genres = selectedGenre;
+    if (selectedAuthor) filter.author = selectedAuthor;
+    if (selectedPublishingHouse) filter.publishingHouse = selectedPublishingHouse;
+    if (selectedYear) filter.yearOfPublication = selectedYear;
+    if (selectedLanguage) filter.language = selectedLanguage;
 
     const [
       allBooks,
@@ -51,8 +66,8 @@ router.get('/', async (req, res) => {
       allLanguages,
       popularBooks,
     ] = await Promise.all([
-      Book.find().skip(skip).limit(limit),
-      Book.countDocuments(),
+      Book.find(filter).skip(skip).limit(limit),
+      Book.countDocuments(filter),
       Book.distinct('genres'),
       Book.distinct('author'),
       Book.distinct('publishingHouse'),
@@ -77,11 +92,13 @@ router.get('/', async (req, res) => {
       totalPages,
       pagination,
       notFound: allBooks.length === 0,
-      value, // <-- передаём в шаблон
+      value,
+      filter,
+      originalUrl: req.originalUrl,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).render('error', { message: 'Ошибка при загрузке главной страницы' });
+    res.status(500).send({ message: 'Ошибка при загрузке главной страницы' });
   }
 });
 
@@ -243,61 +260,212 @@ router.delete('/delete-book/:id', async (req, res) => {
   }
 });
 
-router.get('/search-by-params', async (req, res) => {
+// router.get('/search-by-params', async (req, res) => {
+//   try {
+//     const locals = { title: 'Поиск по параметрам' };
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = 5;
+//     const skip = (page - 1) * limit;
+
+//     const value = req.query.value || '';
+//     const selectedGenre = req.query.genre || '';
+//     const selectedAuthor = req.query.author || '';
+//     const selectedPublishingHouse = req.query.publishingHouse || '';
+//     const selectedYear = req.query.year || '';
+//     const selectedLanguage = req.query.language || '';
+
+//     let filter = {};
+//     if (selectedGenre) filter.genres = selectedGenre;
+//     if (selectedAuthor) filter.author = selectedAuthor;
+//     if (selectedPublishingHouse) filter.publishingHouse = selectedPublishingHouse;
+//     if (selectedYear) filter.yearOfPublication = selectedYear;
+//     if (selectedLanguage) filter.language = selectedLanguage;
+
+//     const [
+//       allBooks,
+//       totalBooks,
+//       allGenres,
+//       allAuthors,
+//       allPublishingHouse,
+//       allYearOfPublication,
+//       allLanguages,
+//       popularBooks,
+//     ] = await Promise.all([
+//       Book.find(filter).skip(skip).limit(limit),
+//       Book.countDocuments(filter),
+//       Book.distinct('genres'),
+//       Book.distinct('author'),
+//       Book.distinct('publishingHouse'),
+//       Book.distinct('yearOfPublication'),
+//       Book.distinct('language'),
+//       Book.find().sort({ numberOfViews: -1 }).limit(3),
+//     ]);
+
+//     const totalPages = Math.ceil(totalBooks / limit);
+//     const pagination = generatePagination(page, totalPages);
+
+//     res.render('books', {
+//       locals,
+//       allBooks,
+//       allGenres,
+//       allAuthors,
+//       allPublishingHouse,
+//       allYearOfPublication,
+//       allLanguages,
+//       popularBooks,
+//       currentPage: page,
+//       totalPages,
+//       pagination,
+//       notFound: allBooks.length === 0,
+//       value,
+//       selectedGenre,
+//       selectedAuthor,
+//       selectedPublishingHouse,
+//       selectedYear,
+//       selectedLanguage,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ message: 'Ошибка при поиске по параметрам' });
+//   }
+// });
+
+// router.get('/search-by-search-field', async (req, res) => {
+//   try {
+//     const { value, page = 1 } = req.query;
+//     const limit = 5;
+//     const currentPage = parseInt(page, 10);
+//     const skip = (currentPage - 1) * limit;
+
+//     const query = {
+//       $or: [
+//         { title: { $regex: value, $options: 'i' } },
+//         { description: { $regex: value, $options: 'i' } },
+//       ],
+//     };
+
+//     const totalBooks = await Book.countDocuments(query);
+//     const totalPages = Math.ceil(totalBooks / limit);
+//     const pagination = generatePagination(currentPage, totalPages);
+
+//     const allBooks = await Book.find(query).skip(skip).limit(limit);
+
+//     const [allGenres, allAuthors, allPublishingHouse, allYearOfPublication, allLanguages] =
+//       await Promise.all([
+//         Book.distinct('genres'),
+//         Book.distinct('author'),
+//         Book.distinct('publishingHouse'),
+//         Book.distinct('yearOfPublication'),
+//         Book.distinct('language'),
+//       ]);
+
+//     const popularBooks = await Book.find().sort({ numberOfViews: -1 }).limit(3);
+
+//     const locals = {
+//       title: `Результаты поиска по "${value}"`,
+//     };
+
+//     const selectedGenre = req.query.genre || '';
+//     const selectedAuthor = req.query.author || '';
+//     const selectedPublishingHouse = req.query.publishingHouse || '';
+//     const selectedYear = req.query.selectedYear || '';
+//     const selectedLanguage = req.query.selectedLanguage || '';
+
+//     res.render('books', {
+//       locals,
+//       allBooks,
+//       allGenres,
+//       allAuthors,
+//       allPublishingHouse,
+//       allYearOfPublication,
+//       allLanguages,
+//       popularBooks,
+//       notFound: allBooks.length === 0,
+//       currentPage,
+//       totalPages,
+//       pagination,
+//       value, // передаем строку поиска
+//       selectedGenre,
+//       selectedAuthor,
+//       selectedPublishingHouse,
+//       selectedYear,
+//       selectedLanguage,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ message: 'Ошибка при поиске книг' });
+//   }
+// });
+
+router.get('/search', async (req, res) => {
   try {
-    const { genre, author, publishingHouse, yearOfPublication, language } = req.query;
-
-    const query = {};
-
-    if (genre) query.genres = genre;
-    if (author) query.author = author;
-    if (publishingHouse) query.publishingHouse = publishingHouse;
-    if (yearOfPublication) {
-      query.yearOfPublication = Number(yearOfPublication);
-    }
-    if (language) query.language = language;
-
-    const books = await Book.find(query);
-    res.json(books);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Ошибка при поиске книг' });
-  }
-});
-
-router.get('/search-by-search-field', async (req, res) => {
-  try {
-    const { value, page = 1 } = req.query;
+    const { page = 1, genre, author, publishingHouse, year, language } = req.query;
     const limit = 5;
     const currentPage = parseInt(page, 10);
     const skip = (currentPage - 1) * limit;
+    const value = req.query.value || '';
 
-    const query = {
-      $or: [
-        { title: { $regex: value, $options: 'i' } },
-        { description: { $regex: value, $options: 'i' } },
-      ],
-    };
+    const query = {}; // Объект для фильтрации
+    const searchQuery = value
+      ? {
+          $or: [
+            { title: { $regex: value, $options: 'i' } },
+            { description: { $regex: value, $options: 'i' } },
+          ],
+        }
+      : {};
 
-    const totalBooks = await Book.countDocuments(query);
+    // Фильтрация по параметрам, если они указаны
+    if (genre) query.genres = genre;
+    if (author) query.author = author;
+    if (publishingHouse) query.publishingHouse = publishingHouse;
+    if (year) query.yearOfPublication = year;
+    if (language) query.language = language;
+
+    // Объединяем оба условия в один фильтр
+    const finalQuery = { ...query, ...searchQuery };
+
+    // Получаем параметры поиска
+    const selectedGenre = req.query.genre || '';
+    const selectedAuthor = req.query.author || '';
+    const selectedPublishingHouse = req.query.publishingHouse || '';
+    const selectedYear = req.query.selectedYear || '';
+    const selectedLanguage = req.query.selectedLanguage || '';
+
+    // Создаем фильтр для поиска
+    let filter = {};
+    if (selectedGenre) filter.genres = selectedGenre;
+    if (selectedAuthor) filter.author = selectedAuthor;
+    if (selectedPublishingHouse) filter.publishingHouse = selectedPublishingHouse;
+    if (selectedYear) filter.yearOfPublication = selectedYear;
+    if (selectedLanguage) filter.language = selectedLanguage;
+
+    // Получаем данные о книгах
+    const [
+      allBooks,
+      totalBooks,
+      allGenres,
+      allAuthors,
+      allPublishingHouse,
+      allYearOfPublication,
+      allLanguages,
+      popularBooks,
+    ] = await Promise.all([
+      Book.find(finalQuery).skip(skip).limit(limit),
+      Book.countDocuments(finalQuery),
+      Book.distinct('genres'),
+      Book.distinct('author'),
+      Book.distinct('publishingHouse'),
+      Book.distinct('yearOfPublication'),
+      Book.distinct('language'),
+      Book.find().sort({ numberOfViews: -1 }).limit(3),
+    ]);
+
     const totalPages = Math.ceil(totalBooks / limit);
     const pagination = generatePagination(currentPage, totalPages);
 
-    const allBooks = await Book.find(query).skip(skip).limit(limit);
-
-    const [allGenres, allAuthors, allPublishingHouse, allYearOfPublication, allLanguages] =
-      await Promise.all([
-        Book.distinct('genres'),
-        Book.distinct('author'),
-        Book.distinct('publishingHouse'),
-        Book.distinct('yearOfPublication'),
-        Book.distinct('language'),
-      ]);
-
-    const popularBooks = await Book.find().sort({ numberOfViews: -1 }).limit(3);
-
     const locals = {
-      title: `Результаты поиска по "${value}"`,
+      title: 'Результаты поиска',
     };
 
     res.render('books', {
@@ -309,15 +477,22 @@ router.get('/search-by-search-field', async (req, res) => {
       allYearOfPublication,
       allLanguages,
       popularBooks,
+      filter,
       notFound: allBooks.length === 0,
       currentPage,
       totalPages,
       pagination,
-      value, // <==== обязательно передаём!
+      value,
+      genre,
+      author,
+      publishingHouse,
+      year,
+      language,
+      originalUrl: req.originalUrl,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).render('error', { message: 'Ошибка при поиске книг' });
+    res.status(500).send({ message: 'Ошибка при поиске книг' });
   }
 });
 

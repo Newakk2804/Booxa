@@ -26,12 +26,13 @@
       <div class="nav__button">
         <ul class="menu__buttons">
           <li class="buttons__item">
-            <a href="/basket"><img src="/img/card.svg" alt=""></a>
             <% if (user && user.role==='admin' ) { %>
+            <a href="/basket" style="display: none;"><img src="/img/card.svg" alt="" style="display: none;"></a>
               <span class="cart-count" id="basket-counter" style="display: none;">
                 0
               </span>
               <% } else { %>
+                <a href="/basket"><img src="/img/card.svg" alt=""></a>
                 <span class="cart-count" id="basket-counter">
                   0
                 </span>

@@ -4,7 +4,10 @@ import Order from '../models/Orders.mjs';
 import { authMiddleware } from '../utils/middlewares.mjs';
 import { checkPassword, hashPassword } from '../utils/helpers.mjs';
 import { checkSchema, validationResult } from 'express-validator';
-import { checkUserValidationSchema } from '../utils/validationSchema.mjs';
+import {
+  checkUserValidationSchema,
+  changePasswordValidationSchema,
+} from '../utils/validationSchema.mjs';
 import upload from '../utils/upload.mjs';
 import moment from 'moment';
 import path from 'path';
@@ -121,13 +124,11 @@ router.post('/profile/check-user', checkSchema(checkUserValidationSchema), async
   const { checkUser } = req.body;
 
   if (!errors.isEmpty()) {
-    return res
-      .status(422)
-      .render('check_user', {
-        errors: errors.mapped(),
-        oldInput: req.body,
-        title: 'Проверка пользователя',
-      });
+    return res.status(422).render('check_user', {
+      errors: errors.mapped(),
+      oldInput: req.body,
+      title: 'Проверка пользователя',
+    });
   }
 
   try {
@@ -153,41 +154,53 @@ router.post('/profile/check-user', checkSchema(checkUserValidationSchema), async
 router.get('/profile/change-password', (req, res) => {
   const locals = {
     title: 'Изменение пароля',
+    errors: {},
+    oldInput: {},
   };
 
   res.render('change_password', locals);
 });
 
-router.post('/profile/change-password', async (req, res) => {
-  const { oldPassword, newPassword, againPassword } = req.body;
-  const userId = req.session.TempUserId || req.session.userId;
+router.post(
+  '/profile/change-password',
+  checkSchema(changePasswordValidationSchema),
+  async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.session.TempUserId || req.session.userId;
 
-  try {
-    const findUser = await User.findById(userId);
-
-    const checkOldPassword = checkPassword(oldPassword, findUser.password);
-
-    if (!checkOldPassword) {
-      return res.status(500).send({ message: 'Старый пароль не верен' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).render('change_password', {
+        errors: errors.mapped(),
+        oldInput: req.body,
+        title: 'Изменение пароля',
+      });
     }
 
-    if (newPassword !== againPassword) {
-      return res.status(500).send({ message: 'пароли не совпадают' });
+    try {
+      const findUser = await User.findById(userId);
+
+      const checkOldPassword = checkPassword(oldPassword, findUser.password);
+
+      if (!checkOldPassword) {
+        return res.status(422).render('change_password', {
+          errors: { oldPassword: { msg: 'Старый пароль неверен' } },
+          oldInput: req.body,
+          title: 'Изменение пароля',
+        });
+      }
+
+      const hashedPassword = hashPassword(newPassword);
+
+      await User.updateOne({ _id: userId }, { $set: { password: hashedPassword } });
+
+      res.redirect('/profile');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: 'Произошла ошибка во время изменения пароля' });
     }
-
-    const hashedPassword = hashPassword(newPassword);
-
-    const updateUser = await User.updateOne(
-      { _id: userId },
-      { $set: { password: hashedPassword } }
-    );
-
-    res.redirect('/profile');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ message: 'Произошла ошибка во время изменения пароля' });
   }
-});
+);
 
 router.get('/all-orders', async (req, res) => {
   try {

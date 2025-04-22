@@ -51,3 +51,29 @@ export const checkUserValidationSchema = {
     },
   },
 };
+
+export const changePasswordValidationSchema = {
+  oldPassword: {
+    notEmpty: {
+      errorMessage: 'Введите старый пароль',
+    },
+  },
+  newPassword: {
+    notEmpty: {
+      errorMessage: 'Введите новый пароль',
+    },
+    isLength: {
+      options: { min: 6 },
+      errorMessage: 'Пароль должен содержать минимум 6 символов',
+    },
+  },
+  againPassword: {
+    notEmpty: {
+      errorMessage: 'Повторите новый пароль',
+    },
+    custom: {
+      options: (value, { req }) => value === req.body.newPassword,
+      errorMessage: 'Пароли не совпадают',
+    },
+  },
+};

@@ -19,7 +19,7 @@ router.post('/login', checkSchema(loginUserValidationSchema), async (req, res) =
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.render('login', { errors: errors.mapped(), oldInput: req.body });
+    return res.render('login', { errors: errors.mapped(), oldInput: req.body, title: 'Вход' });
   }
 
   try {
@@ -30,6 +30,7 @@ router.post('/login', checkSchema(loginUserValidationSchema), async (req, res) =
       return res.render('login', {
         errors: { mail: { msg: 'Пользователь не найден' } },
         oldInput: req.body,
+        title: 'Вход',
       });
     }
 
@@ -39,6 +40,7 @@ router.post('/login', checkSchema(loginUserValidationSchema), async (req, res) =
       return res.render('login', {
         errors: errors.mapped(),
         oldInput: req.body,
+        title: 'Вход',
       });
     }
 

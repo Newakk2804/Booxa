@@ -41,3 +41,13 @@ export const registerUserValidationSchema = {
   },
 };
 
+export const checkUserValidationSchema = {
+  checkUser: {
+    isEmail: {
+      errorMessage: 'Введите корректный email',
+    },
+    notEmpty: {
+      errorMessage: 'Поле не должно быть пустым',
+    },
+  },
+};

@@ -20,7 +20,7 @@ router.post('/register', checkSchema(registerUserValidationSchema), async (req, 
   const { mail, password, secondPassword } = req.body;
 
   if (!errors.isEmpty()) {
-    return res.status(422).render('register', { errors: errors.mapped(), oldInput: req.body });
+    return res.status(422).render('register', { errors: errors.mapped(), oldInput: req.body, title: 'Регистрация'});
   }
 
   const CheckUser = await User.findOne({ mail });
@@ -29,6 +29,7 @@ router.post('/register', checkSchema(registerUserValidationSchema), async (req, 
     return res.status(422).render('register', {
       errors: { mail: { msg: 'Такой пользователь уже существует' } },
       oldInput: req.body,
+      title: 'Регистрация'
     });
   }
 

@@ -3,6 +3,8 @@ import User from '../models/Users.mjs';
 import Order from '../models/Orders.mjs';
 import { authMiddleware } from '../utils/middlewares.mjs';
 import { checkPassword, hashPassword } from '../utils/helpers.mjs';
+import { checkSchema, validationResult } from 'express-validator';
+import { checkUserValidationSchema } from '../utils/validationSchema.mjs';
 import upload from '../utils/upload.mjs';
 import moment from 'moment';
 import path from 'path';
@@ -107,19 +109,36 @@ router.post('/profile/photo', upload.single('imageUrl'), async (req, res) => {
 router.get('/profile/check-user', (req, res) => {
   const locals = {
     title: 'Проверка пользователя',
+    errors: {},
+    oldInput: {},
   };
 
   res.render('check_user', locals);
 });
 
-router.post('/profile/check-user', async (req, res) => {
+router.post('/profile/check-user', checkSchema(checkUserValidationSchema), async (req, res) => {
+  const errors = validationResult(req);
   const { checkUser } = req.body;
+
+  if (!errors.isEmpty()) {
+    return res
+      .status(422)
+      .render('check_user', {
+        errors: errors.mapped(),
+        oldInput: req.body,
+        title: 'Проверка пользователя',
+      });
+  }
 
   try {
     const findUser = await User.findOne({ mail: checkUser });
 
     if (!findUser) {
-      return res.status(500).send({ message: 'Такого пользователя не существует' });
+      return res.status(422).render('check_user', {
+        errors: { checkUser: { msg: 'Такого пользователя не существует' } },
+        oldInput: req.body,
+        title: 'Проверка пользователя',
+      });
     }
 
     req.session.TempUserId = findUser._id;

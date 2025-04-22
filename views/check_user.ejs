@@ -4,12 +4,14 @@
       <div class="block-login">
         <p class="text-login-title">Проверка пользователя</p>
         <div class="block-input">
-          <form action="/profile/check-user" method="POST" class="block-input">
+          <form action="/profile/check-user" method="POST" class="block-input-form">
             <div class="block-check-user">
-              <input type="text" placeholder="имя пользователя" class="input-check-user"
-                name="checkUser">
+              <input type="text" placeholder="имя пользователя" class="input-check-user" name="checkUser">
             </div>
+            <div class="block-input-check-user">
+              <a href="#" onclick="history.back(); return false;" class="button-check-user">Отмена</a>
               <input type="submit" class="button-check-user" value="Отправить">
+            </div>
           </form>
         </div>
       </div>

@@ -13,7 +13,7 @@
           <div class="search-block-content">
             <div class="search-block">
               <label for="genre">Жанр</label>
-              <select name="genre" id="genre">
+              <select class="search-select" name="genre" id="genre">
                 <option value="">Выберите жанр</option>
                 <% allGenres.forEach(genre => { %>
                   <option value="<%= genre %>" <% if (genre === filter.genres) { %> selected <% } %>><%= genre %></option>
@@ -22,7 +22,7 @@
             </div>
             <div class="search-block">
               <label for="author">Автор</label>
-              <select name="author" id="author">
+              <select class="search-select" name="author" id="author">
                 <option value="">Выберите автора</option>
                 <% allAuthors.forEach(author=> { %>
                   <option value="<%= author %>" <% if (author === filter.author) { %> selected <% } %>><%= author %></option>
@@ -31,7 +31,7 @@
             </div>
             <div class="search-block">
               <label for="publishingHouse">Издательство</label>
-              <select name="publishingHouse" id="publishingHouse">
+              <select class="search-select" name="publishingHouse" id="publishingHouse">
                 <option value="">Выберите издательство</option>
                 <% allPublishingHouse.forEach(ph=> { %>
                   <option value="<%= ph %>" <% if (ph === filter.publishingHouse) { %> selected <% } %>><%= ph %></option>
@@ -44,7 +44,7 @@
             </div>
             <div class="search-block">
               <label for="language">Язык</label>
-              <select name="language" id="language">
+              <select class="search-select" name="language" id="language">
                 <option value="">Выберите язык</option>
                 <% allLanguages.forEach(language => { %>
                   <option value="<%= language %>" <% if (language === filter.language) { %> selected <% } %>><%= language %></option>

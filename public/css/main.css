@@ -2111,7 +2111,7 @@ footer {
   transition: all 0.1s;
 }
 
-.search-block select {
+.search-select {
   padding: 6px 12px;
   border-radius: 10px;
   font-weight: 400;
@@ -2126,7 +2126,7 @@ footer {
   background-size: 16px 16px;
 }
 
-.search-block select:focus{
+.search-select:focus{
   border-color: #7fa5a3;
   outline: none;
   box-shadow: 0 0 5px rgba(94, 136, 133, 0.5);

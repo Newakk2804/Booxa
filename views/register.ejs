@@ -3,9 +3,14 @@
     <div class="container">
       <div class="block-register">
         <p class="text-register-title">Регистрация</p>
+        <% if (errors && errors.global) { %>
+          <div class="error-message">
+            <p><%= errors.global.msg %></p>
+          </div>
+        <% } %>
         <div class="block-input">
           <form action="/register" method="POST" class="block-input">
-            <input type="text" placeholder="почта" class="input-register" name="mail" value="<%= oldInput?.mail || '' %>">
+            <input type="text" placeholder="почта" class="input-register" name="mail" value="<%= formData?.mail || '' %>">
             <% if (errors?.mail) { %>
               <p class="error-message"><%= errors.mail.msg %></p>
             <% } %>

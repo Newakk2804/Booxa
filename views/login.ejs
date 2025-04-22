@@ -3,9 +3,14 @@
     <div class="container">
       <div class="block-login">
         <p class="text-login-title">Вход</p>
+        <% if (errors && errors.global) { %>
+          <div class="error-message">
+            <p><%= errors.global.msg %></p>
+          </div>
+        <% } %>
         <div class="block-input">
           <form action="/login" method="POST" class="block-input">
-            <input type="text" placeholder="логин" class="input-login" name="mail" value="<%= oldInput?.mail || '' %>">
+            <input type="text" placeholder="логин" class="input-login" name="mail" value="<%= formData?.mail || '' %>">
             <% if (errors?.mail) { %>
               <p class="error-message">
                 <%= errors.mail.msg %>

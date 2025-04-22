@@ -1,9 +1,8 @@
 import { Router } from 'express';
 import User from '../models/Users.mjs';
 import Order from '../models/Orders.mjs';
-import { authMiddleware } from '../utils/middlewares.mjs';
+import { authMiddleware } from '../utils/middlewares/auth.mjs';
 import { checkPassword, hashPassword } from '../utils/helpers.mjs';
-import { checkSchema, validationResult } from 'express-validator';
 import {
   checkUserValidationSchema,
   changePasswordValidationSchema,
@@ -12,6 +11,7 @@ import upload from '../utils/upload.mjs';
 import moment from 'moment';
 import path from 'path';
 import fs from 'fs';
+import { validate } from '../utils/middlewares/validate.mjs';
 
 const router = Router();
 
@@ -113,49 +113,48 @@ router.get('/profile/check-user', (req, res) => {
   const locals = {
     title: 'Проверка пользователя',
     errors: {},
-    oldInput: {},
+    formData: {},
   };
 
   res.render('check_user', locals);
 });
 
-router.post('/profile/check-user', checkSchema(checkUserValidationSchema), async (req, res) => {
-  const errors = validationResult(req);
-  const { checkUser } = req.body;
+router.post(
+  '/profile/check-user',
+  validate(checkUserValidationSchema, 'check_user', 'Проверка пользователя'),
+  async (req, res) => {
+    const { checkUser } = req.body;
 
-  if (!errors.isEmpty()) {
-    return res.status(422).render('check_user', {
-      errors: errors.mapped(),
-      oldInput: req.body,
-      title: 'Проверка пользователя',
-    });
-  }
+    try {
+      const findUser = await User.findOne({ mail: checkUser });
 
-  try {
-    const findUser = await User.findOne({ mail: checkUser });
+      if (!findUser) {
+        return res.status(422).render('check_user', {
+          errors: { checkUser: { msg: 'Такого пользователя не существует' } },
+          formData: req.body,
+          title: 'Проверка пользователя',
+        });
+      }
 
-    if (!findUser) {
-      return res.status(422).render('check_user', {
-        errors: { checkUser: { msg: 'Такого пользователя не существует' } },
-        oldInput: req.body,
-        title: 'Проверка пользователя',
+      req.session.TempUserId = findUser._id;
+
+      res.redirect('/profile/change-password');
+    } catch (error) {
+      console.error(error);
+      res.status(500).render('change_password', {
+        errors: { global: { msg: 'Ошибка во время проверки пользователя' } },
+        formData: req.body,
+        title: 'Изменение пароля',
       });
     }
-
-    req.session.TempUserId = findUser._id;
-
-    res.redirect('/profile/change-password');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ message: 'Ошибка во время проверки пользователя' });
   }
-});
+);
 
 router.get('/profile/change-password', (req, res) => {
   const locals = {
     title: 'Изменение пароля',
     errors: {},
-    oldInput: {},
+    formData: {},
   };
 
   res.render('change_password', locals);
@@ -163,29 +162,19 @@ router.get('/profile/change-password', (req, res) => {
 
 router.post(
   '/profile/change-password',
-  checkSchema(changePasswordValidationSchema),
+  validate(changePasswordValidationSchema, 'change_password', 'Изменение пароля'),
   async (req, res) => {
     const { oldPassword, newPassword } = req.body;
     const userId = req.session.TempUserId || req.session.userId;
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).render('change_password', {
-        errors: errors.mapped(),
-        oldInput: req.body,
-        title: 'Изменение пароля',
-      });
-    }
-
     try {
       const findUser = await User.findById(userId);
-
       const checkOldPassword = checkPassword(oldPassword, findUser.password);
 
       if (!checkOldPassword) {
-        return res.status(422).render('change_password', {
+        return res.status(400).render('change_password', {
           errors: { oldPassword: { msg: 'Старый пароль неверен' } },
-          oldInput: req.body,
+          formData: req.body,
           title: 'Изменение пароля',
         });
       }
@@ -197,7 +186,11 @@ router.post(
       res.redirect('/profile');
     } catch (error) {
       console.error(error);
-      res.status(500).send({ message: 'Произошла ошибка во время изменения пароля' });
+      res.status(500).render('change_password', {
+        errors: { global: { msg: 'Ошибка при изменении' } },
+        formData: req.body,
+        title: 'Изменение пароля',
+      });
     }
   }
 );

@@ -3,11 +3,16 @@
     <div class="container">
       <div class="block-login">
         <p class="text-login-title">Проверка пользователя</p>
+        <% if (errors && errors.global) { %>
+          <div class="error-message">
+            <p><%= errors.global.msg %></p>
+          </div>
+        <% } %>
         <div class="block-input">
           <form action="/profile/check-user" method="POST" class="block-input-form">
             <div class="block-check-user">
               <input type="text" placeholder="имя пользователя" class="input-check-user" name="checkUser"
-                value="<%= oldInput?.checkUser || '' %>">
+                value="<%= FormData?.checkUser || '' %>">
               <% if (errors?.checkUser) { %>
                 <p class="error-message">
                   <%= errors.checkUser.msg %>

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import User from '../models/Users.mjs';
 import { loginUserValidationSchema } from '../utils/validationSchema.mjs';
-import { validationResult, checkSchema } from 'express-validator';
+import { validate } from '../utils/middlewares/validate.mjs';
 import bcrypt from 'bcrypt';
 
 const router = Router();
@@ -10,18 +10,12 @@ router.get('/login', (req, res) => {
   const locals = {
     title: 'Вход',
     errors: {},
-    oldInput: {},
+    formData: {},
   };
   res.render('login', locals);
 });
 
-router.post('/login', checkSchema(loginUserValidationSchema), async (req, res) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.render('login', { errors: errors.mapped(), oldInput: req.body, title: 'Вход' });
-  }
-
+router.post('/login', validate(loginUserValidationSchema, 'login', 'Вход'), async (req, res) => {
   try {
     const { mail, password } = req.body;
     const user = await User.findOne({ mail });
@@ -29,7 +23,7 @@ router.post('/login', checkSchema(loginUserValidationSchema), async (req, res) =
     if (!user) {
       return res.render('login', {
         errors: { mail: { msg: 'Пользователь не найден' } },
-        oldInput: req.body,
+        formData: req.body,
         title: 'Вход',
       });
     }
@@ -38,8 +32,8 @@ router.post('/login', checkSchema(loginUserValidationSchema), async (req, res) =
 
     if (!isPasswordValid) {
       return res.render('login', {
-        errors: errors.mapped(),
-        oldInput: req.body,
+        errors: { password: {msg: 'Неверный пароль'}},
+        formData: req.body,
         title: 'Вход',
       });
     }
@@ -49,7 +43,11 @@ router.post('/login', checkSchema(loginUserValidationSchema), async (req, res) =
     res.redirect('/');
   } catch (error) {
     console.error(error);
-    res.status(500).send('Ошибка сервера');
+    res.status(500).render('login', {
+      errors: { global: { msg: 'Ошибка во время авторизации' } },
+      formData: req.body,
+      title: 'Вход',
+    });
   }
 });
 

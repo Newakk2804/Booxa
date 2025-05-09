@@ -280,11 +280,11 @@ export const search = async (req, res) => {
 
     const finalQuery = { ...query, ...searchQuery };
 
-    const selectedGenre = req.query.genre || '';
-    const selectedAuthor = req.query.author || '';
-    const selectedPublishingHouse = req.query.publishingHouse || '';
-    const selectedYear = req.query.selectedYear || '';
-    const selectedLanguage = req.query.selectedLanguage || '';
+    const selectedGenre = query.genres || '';
+    const selectedAuthor = query.author || '';
+    const selectedPublishingHouse = query.publishingHouse || '';
+    const selectedYear = query.yearOfPublication || '';
+    const selectedLanguage = query.language || '';
 
     let filter = {};
     if (selectedGenre) filter.genres = selectedGenre;
